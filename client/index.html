@@ -1,0 +1,32 @@
+<head>
+  <meta charset="utf-8">
+  <title>Freshview</title>
+  <meta content="True" name="HandheldFriendly" />
+  <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+  <meta property="qc:admins" content="**FROM connect.qq.com**" />
+
+</head>
+
+<body>
+  {{> freshview}}
+</body>
+
+<template name="freshview">
+  <div id="Wrapper">
+    <div class="content">
+      <div id="Main">
+        {{#each topics}}
+          {{> topic}}
+        {{/each}}
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<template name="topic">
+  <div class="topic">
+    <span class="name">{{title}}</span>
+    <span class="score">{{detail}}</span>
+  </div>
+</template>
