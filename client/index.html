@@ -2,13 +2,13 @@
   <meta charset="utf-8">
   <title>Freshview</title>
   <meta content="True" name="HandheldFriendly" />
-  <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
   <meta property="qc:admins" content="**FROM connect.qq.com**" />
 
 </head>
 
 <body>
   {{> freshview}}
+  {{> new}}
 </body>
 
 <template name="freshview">
@@ -22,11 +22,24 @@
 
     </div>
   </div>
+  <a type="button" class="new-topic" href='/new'>New Topic</a>
+
 </template>
 
 <template name="topic">
   <div class="topic">
     <span class="name">{{title}}</span>
-    <span class="score">{{detail}}</span>
+    <span class="score">{{content}}</span>
   </div>
 </template>
+
+<template name="new">
+  <form>
+    <div>
+      <textarea name="title"></textarea>
+      <textarea name="content"></textarea>
+    </div>
+    <input type="submit" value="Create" class="super normal button" />
+  </form>
+</template>
+
