@@ -76,7 +76,7 @@ Template.new.events({
     if (tags) tags = tags.split(',');
     tagIds = [];
     _.each(tags, function(id){
-      if(!Tags.find({_id:id}).count()) {
+      if(!Tags.find({text:id}).count() && !Tags.find({id:id}).count()) {
       	var insert_id = Tags.insert({
       	  text: id
       	});
