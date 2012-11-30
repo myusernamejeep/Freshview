@@ -1,45 +1,47 @@
 <head>
-  <meta charset="utf-8">
-  <title>Freshview</title>
-  <meta content="True" name="HandheldFriendly" />
-  <meta property="qc:admins" content="**FROM connect.qq.com**" />
-
+	<meta charset="utf-8">
+	<title>Freshview</title>
+	<meta content="True" name="HandheldFriendly" />
+	<meta property="qc:admins" content="**FROM connect.qq.com**" />
 </head>
-
 <body>
-  {{> freshview}}
-  {{> new}}
+	<ul class="nav nav-pills">
+		{{> groupview}}
+	</ul>
+	{{> new}}
+	{{> freshview}}
 </body>
-
 <template name="freshview">
-  <div id="Wrapper">
-    <div class="content">
-      <div id="Main">
-        {{#each topics}}
-          {{> topic}}
-        {{/each}}
-      </div>
-
-    </div>
-  </div>
-  <a type="button" class="new-topic" href='/new'>New Topic</a>
-
+	<div id="Wrapper">
+		<div class="content">
+			<div id="Main">
+				{{#each topics}}
+				{{> topic}}
+				{{/each}}
+			</div>
+		</div>
+	</div>
+	<a type="button" class="new-topic" href='/new'>New Topic</a>
 </template>
-
+<template name="groupview">
+	{{#each groups}}
+	<li class="">
+		<a href="/{{group_link}}">{{group_name}}</a>
+	</li>
+	{{/each}}
+</template>
 <template name="topic">
-  <div class="topic">
-    <span class="name">{{title}}</span>
-    <span class="score">{{content}}</span>
-  </div>
+	<div class="topic">
+		<span class="name">{{title}}</span>
+		<span class="score">{{content}}</span>
+	</div>
 </template>
-
 <template name="new">
-  <form>
-    <div>
-      <textarea name="title"></textarea>
-      <textarea name="content"></textarea>
-    </div>
-    <input type="submit" value="Create" class="super normal button" />
-  </form>
+	<form>
+		<div>
+			<textarea name="title"></textarea>
+			<textarea name="content"></textarea>
+		</div>
+		<input type="submit" value="Create" class="super normal button" />
+	</form>
 </template>
-

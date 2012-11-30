@@ -1,2 +1,2 @@
-Topics = new Meteor.Collection("topics");
-// Players = new Meteor.Collection("players");
+Questions = new Meteor.Collection("questions");
+Tags = new Meteor.Collection("tags");

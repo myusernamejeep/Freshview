@@ -1,6 +1,16 @@
-Template.freshview.topics = function() {
-  return Topics.find({});
+Template.freshview.questions = function() {
+  return Questions.find({});
 };
+
+Template.groupview.groups = function() {
+  return [
+  	{ group_link:'questions', group_name:'Questions'},
+  	{ group_link:'tags', group_name:'Tags'},
+  	{ group_link:'users', group_name:'Users'},
+  	{ group_link:'badges', group_name:'Badges'},
+  	{ group_link:'unanswered', group_name:'Answered'}
+  ];
+}
 
 Template.freshview.events({
   'click .new-topic': function (e) {
@@ -23,7 +33,7 @@ Template.new.events({
     e.preventDefault();
     data = formData(e.currentTarget);
     console.log(data);
-    topic_id = Topics.insert(data);
+    topic_id = Questions.insert(data);
     console.log(topic_id);
   }
 });
