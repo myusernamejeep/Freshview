@@ -5,12 +5,21 @@
 	<meta property="qc:admins" content="**FROM connect.qq.com**" />
 </head>
 <body>
+	{{> topbar}}
 	<ul class="nav nav-pills">
 		{{> groupview}}
 	</ul>
 	{{> new}}
 	{{> freshview}}
 </body>
+<template name="topbar">
+	{{#if logined}}
+	{{#with member}}
+	{{profile.facebook.name}} <img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" class="img-rounded">
+	{{/with}}
+	{{else}}<a id="fb-login" href="#" class="btn btn-primary">Facebook</a>
+	{{/if}}
+</template>
 <template name="freshview">
 	<div id="Wrapper">
 		<div class="content">
@@ -39,8 +48,9 @@
 <template name="new">
 	<form>
 		<div>
-			<textarea name="title"></textarea>
-			<textarea name="content"></textarea>
+			<div><input name="title" class="span6" type="text" placeholder="What's your programming question? be specific."></input></div>
+			<div><textarea class="span6" name="content"></textarea></div>
+			<div><input name="title" class="span6" type="text" placeholder="At lease one tag such as (aps.net-mvc sql-server python), max 5 tags"></input></div>
 		</div>
 		<input type="submit" value="Create" class="super normal button" />
 	</form>

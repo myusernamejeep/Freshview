@@ -38,6 +38,24 @@ Template.new.events({
   }
 });
 
+Template.topbar.helpers({
+  logined: function() {
+    return Meteor.user();
+  },
+  member: function() {
+    return Meteor.user();
+  }
+});
+
+Template.topbar.events({
+  'click #fb-login': function() {
+    Meteor.loginWithFacebook({
+    }, function(err){
+    	console.log(err);
+    });
+  }
+});
+
 FVRouter = Backbone.Router.extend({
   routes: {
     "new": "createNew"
