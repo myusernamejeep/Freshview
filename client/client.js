@@ -29,14 +29,27 @@ formData = function(form) {
 }
 
 Template.new.events({
-  'submit form': function(e) {
+  'click .submit-question': function(e) {
     e.preventDefault();
-    data = formData(e.currentTarget);
-    console.log(data);
-    topic_id = Questions.insert(data);
+    var form = $(e.target).parent('form');
+    var title = form.find('input[name="title"]').val();
+    var content = form.find('textarea[name="content"]').val();
+    var tags = form.find('input[name="tags"]').val();
+    console.log("tags " + tags);
+    if (tags) tags = tags.split(',');
+    topic_id = Questions.insert({
+    	title: title,
+    	content: content,
+    	tags: tags
+    });
     console.log(topic_id);
   }
 });
+
+Template.new.rendered = function() {
+	console.log(_.pluck(Tags.find().fetch(), 'name'));
+	
+};
 
 Template.topbar.helpers({
   logined: function() {
@@ -64,6 +77,16 @@ FVRouter = Backbone.Router.extend({
     $('body').html(Template.new());
   }
 });
+
+Meteor.subscribe('tags', function () {
+	var select = $('#new-question-form').find('input[name="tags"]').select2({
+		tags: _.pluck(Tags.find().fetch(), 'name'),
+		tokenSeparators: [",", " "],
+		allowClear: true
+	});
+	
+});
+
 
 
 var Router = new FVRouter;
