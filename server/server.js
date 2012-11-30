@@ -3,7 +3,7 @@ Meteor.startup(function() {
 		var data = ["red", "green", "blue"];
 		for(var i = 0; i < data.length; i++) {
 			var list_id = Tags.insert({
-				name : data[i]
+				text : data[i]
 			});
 		}
 	}

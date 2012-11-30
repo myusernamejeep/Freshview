@@ -27,7 +27,7 @@
 		<div class="content">
 			<div id="Main">
 				{{#each questions}}
-				{{> question}}
+				{{> question_item}}
 				{{/each}}
 			</div>
 		</div>
@@ -41,12 +41,19 @@
 	</li>
 	{{/each}}
 </template>
-<template name="question">
+<template name="question_item">
 	<div class="question">
 		<span class="name">{{title}}</span>
 		<span class="score">{{content}}</span>
+		<span>{{usernameof}}</span>
+		<span><img src="{{userphotoof}}" class="img-rounded"></span>
+		{{#each tags}}
+			<button class="btn">{{text}}</button>
+		{{/each}}
 	</div>
 </template>
+
+
 <template name="new">
 	<form id="new-question-form">
 		<div>

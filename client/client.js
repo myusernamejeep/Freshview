@@ -28,6 +28,44 @@ formData = function(form) {
   return data;
 }
 
+usernameof = function(userId) {
+  var _ref;
+  return (_ref = Meteor.users.findOne({
+    _id: userId
+  })) != null ? _ref.profile.name : void 0;
+};
+
+userphotoof = function(userid) {
+  var _ref;
+  return (_ref = Meteor.users.findOne({
+    _id: userId
+  })) != null ? "https://graph.facebook.com/" + _ref.profile.facebook.username + "/picture" : void 0;
+};
+
+
+view_helpers = {
+  usernameof: function() {
+    return usernameof(this.user_id);
+  },
+  userphotoof: function(size) {
+    return userphotoof(this.user_id);
+  }
+};
+
+Template.question_item.helpers(view_helpers);
+Template.question_item.helpers({
+  tags: function() {
+  	var tagIds = this.tags;
+  	var tags = [];
+  	_.each(tagIds, function(tag){
+  		console.log(tag);
+  		tags.push(Tags.findOne({_id:tag.tag_id}));
+  	});
+  	console.log(tags);
+  	return tags;
+  }
+});
+
 Template.new.events({
   'click .submit-question': function(e) {
     e.preventDefault();
@@ -35,21 +73,28 @@ Template.new.events({
     var title = form.find('input[name="title"]').val();
     var content = form.find('textarea[name="content"]').val();
     var tags = form.find('input[name="tags"]').val();
-    console.log("tags " + tags);
     if (tags) tags = tags.split(',');
+    tagIds = [];
+    _.each(tags, function(id){
+      if(!Tags.find({_id:id}).count()) {
+      	var insert_id = Tags.insert({
+      	  text: id
+      	});
+      	tagIds.push({tag_id: insert_id});
+      } else {
+      	tagIds.push({tag_id: insert_id});
+      }
+    });
+    
     topic_id = Questions.insert({
     	title: title,
     	content: content,
-    	tags: tags
+    	tags: tagIds,
+    	user_id: Meteor.userId()
     });
     console.log(topic_id);
   }
 });
-
-Template.new.rendered = function() {
-	console.log(_.pluck(Tags.find().fetch(), 'name'));
-	
-};
 
 Template.topbar.helpers({
   logined: function() {
@@ -80,11 +125,14 @@ FVRouter = Backbone.Router.extend({
 
 Meteor.subscribe('tags', function () {
 	var select = $('#new-question-form').find('input[name="tags"]').select2({
-		tags: _.pluck(Tags.find().fetch(), 'name'),
-		tokenSeparators: [",", " "],
-		allowClear: true
+		id: '_id',
+		createSearchChoice:function(term, data) { 
+			console.log('term' + term);
+			console.log( data);
+			if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {return {_id:term, text:term};} },
+		data: Tags.find().fetch(),
+		multiple: true
 	});
-	
 });
 
 
