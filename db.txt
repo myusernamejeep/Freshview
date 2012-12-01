@@ -1,0 +1,2 @@
+db.questions.remove()
+db.tags.remove()

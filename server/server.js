@@ -1,12 +1,4 @@
 Meteor.startup(function() {
-	if(Tags.find().count() === 0) {
-		var data = ["red", "green", "blue"];
-		for(var i = 0; i < data.length; i++) {
-			var list_id = Tags.insert({
-				text : data[i]
-			});
-		}
-	}
 	
 	Meteor.publish("tags", function(){
 		return Tags.find();
