@@ -1,6 +1,8 @@
-Template.questionsview.questions = function() {
-  return Questions.find();
-};
+Template.questionsview.helpers({
+  questions : function() {
+    return Questions.find();
+  }
+});
 
 Template.tagsview.tags = function() {
   return Tags.find();
@@ -12,35 +14,29 @@ Template.usersview.users = function() {
 
 Template.groupview.groups = function() {
   return [{
-    group_link : 'questions',
-    group_name : 'Questions'
+    group_link : 'questions', group_name : 'Questions'
   }, {
-    group_link : 'tags',
-    group_name : 'Tags'
+    group_link : 'tags', group_name : 'Tags'
   }, {
-    group_link : 'users',
-    group_name : 'Users'
+    group_link : 'users', group_name : 'Users'
   }, {
-    group_link : 'badges',
-    group_name : 'Badges'
+    group_link : 'badges', group_name : 'Badges'
   }, {
-    group_link : 'unanswered',
-    group_name : 'UnAnswered'
+    group_link : 'unanswered', group_name : 'UnAnswered'
   }];
 };
 
 Template.freshview.helpers({
   is_questions_view : function() {
     return Session.get('main_template_name') === 'questions';
-  },
-  is_new_view : function() {
+  }, is_new_view : function() {
     return Session.get('main_template_name') === 'new';
-  },
-  is_tags_view : function() {
+  }, is_tags_view : function() {
     return Session.get('main_template_name') === 'tags';
-  },
-  is_users_vew : function() {
+  }, is_users_view : function() {
     return Session.get('main_template_name') === 'users';
+  }, is_question_view : function() {
+    return Session.get('main_template_name') === 'question';
   }
 });
 
@@ -71,14 +67,11 @@ userphotoof = function(userId) {
 view_helpers = {
   usernameof : function() {
     return usernameof(this.user_id);
-  },
-  userphotoof : function(size) {
+  }, userphotoof : function(size) {
     return userphotoof(this.user_id);
-  },
-  fromnow : function(t) {
+  }, fromnow : function(t) {
     return moment.utc(t).fromNow();
-  },
-  count : function(items) {
+  }, count : function(items) {
     return items.length;
   }
 };
@@ -101,8 +94,15 @@ Template.tag_item.helpers(view_helpers);
 
 Template.usersview.helpers(view_helpers);
 
-Template.
-new  .events({
+Template.questionview.helpers({
+  question_id : function() {
+    return Session.get('question_id');
+  }
+});
+
+//@ft:off
+Template.new.events({
+  //@ft:on
   'click .submit-question' : function(e) {
     e.preventDefault();
     var form = $(e.target).parent('form');
@@ -112,55 +112,67 @@ new  .events({
     if (tags)
       tags = tags.split(',');
     tagIds = [];
+    console.log('get tags:');
+    console.log(tags);
     _.each(tags, function(id) {
       if (!id) {
         return;
       }
-      if (!Tags.findOne({
-        text : id
-      }) && !Tags.findOne({
-        _id : id
-      })) {
-        var insert_id = Tags.insert({
-          text : id
-        });
-        tagIds.push({
-          tag_id : insert_id
-        });
+      //@ft:off
+      if (!Tags.findOne({ text : id }) && !Tags.findOne({ _id : id })) {
+        var insert_id = Tags.insert({ text : id });
+        tagIds.push({ tag_id : insert_id });
       } else {
-        console.log(id);
-        tagIds.push({
-          tag_id : id
-        });
+        tagIds.push({ tag_id : id });
+      }
+    });
+    console.log('get tagIds:');
+    console.log(tagIds);
+    //@ft:on
+    topic_id = Questions.insert({
+      title : title, content : content, tags : tagIds, user_id : Meteor.userId(), created : new Date(), updated : new Date()
+    });
+
+    console.log('push topic to user');
+    Meteor.users.update({
+      _id : Meteor.userId()
+    }, {
+      $push : {
+        'questions' : topic_id
       }
     });
 
-    topic_id = Questions.insert({
-      title : title,
-      content : content,
-      tags : tagIds,
-      user_id : Meteor.userId(),
-      created : new Date(),
-      updated : new Date()
-    });
-
     _.each(tagIds, function(tagId) {
-      Tags.update({
-        _id : tagId['tag_id']
-      }, {
-        $push : {
-          question_ids : tagId['tag_id']
-        }
+      var tag_id = tagId['tag_id'];
+      //@ft:off
+      if (Meteor.users.find({  _id : Meteor.userId(), 'tags.tag_id' : tag_id  }, {fields:{_id:1, tags:1}}).count()) {
+        console.log('inc');
+        Meteor.users.update({ _id : Meteor.userId(), 'tags.tag_id' : tag_id }, {
+          $inc : { 'tags.$.count' : 1 }
+        });
+        console.log('inc finish');
+      } else {
+        console.log('push');
+        Meteor.users.update({
+          _id : Meteor.userId()
+        }, {
+          $push : { 'tags' : { tag_id : tag_id, count : 1 } }
+        });
+        console.log('push finish');
+      }
+      console.log("update questions in tags");
+      Tags.update({ _id : tag_id }, {
+        $push : {  questions : topic_id }
       });
     });
   }
 });
 
+//@ft:on
 Template.topbar.helpers({
   logined : function() {
     return Meteor.user();
-  },
-  member : function() {
+  }, member : function() {
     return Meteor.user();
   }
 });
@@ -171,44 +183,46 @@ Template.topbar.events({
     }, function(err) {
       console.log(err);
     });
-  },
-  'click #btn-logout' : function() {
+  }, 'click #btn-logout' : function() {
     Meteor.logout();
   }
 });
 
 FVRouter = Backbone.Router.extend({
+  //@ft:off
   routes : {
-    ":group" : 'show_group'
+    ":group" : 'show_group', 
+    "questions/:id" : 'show_question'
   },
+  //@ft:on
   show_group : function(group) {
     Session.set('main_template_name', group);
+  }, show_question : function(id) {
+    Session.set('main_template_name', 'question');
+    Session.set('question_id', id);
   }
 });
 
 Meteor.subscribe('tags', function() {
   var select = $('#new-question-form').find('input[name="tags"]').select2({
-    id : '_id',
-    createSearchChoice : function(term, data) {
+    id : '_id', createSearchChoice : function(term, data) {
       console.log('term' + term);
       console.log(data);
       if ($(data).filter(function() {
         return this.text.localeCompare(term) === 0;
       }).length === 0) {
         return {
-          _id : term,
-          text : term
+          _id : term, text : term
         };
       }
-    },
-    data : Tags.find().fetch(),
-    multiple : true
+    }, data : Tags.find().fetch(), multiple : true
   });
 });
 
 var Router = new FVRouter;
 
 Meteor.startup(function() {
+  Meteor.subscribe('allUserData');
   Backbone.history.start({
     pushState : true
   });

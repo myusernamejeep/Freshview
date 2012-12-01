@@ -1,2 +1,3 @@
 db.questions.remove()
 db.tags.remove()
+db.users.remove()
