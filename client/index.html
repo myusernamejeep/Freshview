@@ -29,19 +29,19 @@
     <div class="content">
       <div id="Main">
         {{#if is_questions_view}}
-          {{> questionsview }}
+        {{> questionsview }}
         {{/if}}
         {{#if is_new_view}}
-          {{> new }}
+        {{> new }}
         {{/if}}
         {{#if is_tags_view}}
-          {{> tagsview }}
+        {{> tagsview }}
         {{/if}}
         {{#if is_users_view}}
-          {{> usersview }}
+        {{> usersview }}
         {{/if}}
         {{#if is_question_view}}
-          {{> questionview }}
+        {{> questionview }}
         {{/if}}
       </div>
     </div>
@@ -57,7 +57,6 @@
   {{/each}}
 </template>
 
-
 <!-- questions view -->
 <template name="questionsview">
   {{#each questions}}
@@ -66,7 +65,7 @@
 </template>
 <template name="question_item">
   <div class="question">
-    <span class="name">{{title}}</span>
+    <a href="/questions/{{_id}}" class="name">{{title}}</a>
     <span class="score">{{content}}</span>
     <span>{{usernameof}}</span>
     <span><img src="{{userphotoof}}" class="img-rounded"></span>
@@ -87,7 +86,10 @@
 </template>
 <template name="tag_item">
   <div class="tag">
-    <button class="btn">{{text}}</button> X {{count questions}}
+    <button class="btn">
+      {{text}}
+    </button>
+    X {{count questions}}
   </div>
 </template>
 
@@ -105,7 +107,26 @@
 
 <!-- question view -->
 <template name="questionview">
-  {{question_id}}
+  {{#with question}}
+  <h3>{{title}}</h3>
+  <div>
+    {{content}}
+  </div>
+  {{#each tags}}
+  <button class="btn">
+    {{text}}
+  </button>
+  {{/each}}
+  at {{fromnow created}}
+  by <span>{{usernameof}}</span>
+  {{#each comments}}
+    <div>{{content}} - {{fromnow created}} - {{usernameof}} - <img src="{{userphotoof}}" class="img-rounded"/></div>
+  {{/each}}
+  <div class="reply">
+    <textarea class="input-add-comment"></textarea>
+    <button class="btn-add-comment btn-primary">Add Comment</button>
+  </div>
+  {{/with}}
 </template>
 
 <template name="new">

@@ -73,12 +73,7 @@ view_helpers = {
     return moment.utc(t).fromNow();
   }, count : function(items) {
     return items.length;
-  }
-};
-
-Template.question_item.helpers(view_helpers);
-Template.question_item.helpers({
-  tags : function() {
+  }, tags : function() {
     var tagIds = this.tags;
     var tags = [];
     _.each(tagIds, function(tag) {
@@ -88,15 +83,42 @@ Template.question_item.helpers({
     });
     return tags;
   }
-});
+};
+
+Template.question_item.helpers(view_helpers);
 
 Template.tag_item.helpers(view_helpers);
 
 Template.usersview.helpers(view_helpers);
 
+Template.questionview.helpers(view_helpers);
 Template.questionview.helpers({
   question_id : function() {
     return Session.get('question_id');
+  }, question : function() {
+    return Questions.findOne({
+      _id : Session.get('question_id')
+    });
+  }
+});
+Template.questionview.events({
+  'click .btn-add-comment' : function(e) {
+    e.preventDefault();
+    var form = $(e.target).parent('div');
+    var content = form.find('.input-add-comment').val();
+    if (!content)
+      return;
+    //@ft:off
+    Questions.update({_id:this.question_id}, {
+      $push : {
+        'comments' : {
+          content: content,
+          created: new Date(),
+          user_id: Meteor.userId()
+        }
+      }
+    });
+    //@ft:on
   }
 });
 
@@ -134,9 +156,7 @@ Template.new.events({
     });
 
     console.log('push topic to user');
-    Meteor.users.update({
-      _id : Meteor.userId()
-    }, {
+    Meteor.users.update({ _id : Meteor.userId() }, {
       $push : {
         'questions' : topic_id
       }
