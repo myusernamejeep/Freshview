@@ -72,7 +72,9 @@ view_helpers = {
   }, fromnow : function(t) {
     return moment.utc(t).fromNow();
   }, count : function(items) {
-    return items.length;
+    if (items)
+      return items.length;
+    return 0;
   }, tags : function() {
     var tagIds = this.tags;
     var tags = [];
@@ -158,8 +160,28 @@ Template.questionview.events({
     Meteor.users.update({_id:Meteor.userId()}, {
       $push : {answers: answer_id}
     });
-    //@ft:on
+    
+  },
+  'click .vote-up': function() {
+    if (Questions.find({_id:this._id, 'votes.user_id':Meteor.userId()}).count()) {
+      return;
+    }
+    Questions.update({_id:this._id}, {
+      $push : {votes: {
+        user_id: Meteor.userId(),
+        created: new Date()
+      }}      
+    })
+  },
+  'click .vote-down': function() {
+    if (!Questions.find({_id:this._id, 'votes.user_id':Meteor.userId()}).count()) {
+      return;
+    }
+    Questions.update({_id:question_id, 'votes.user_id':Meteor.userId()}, {
+      $pull: {votes: {user_id:Meteor.userId()}}
+    });
   }
+  //@ft:on
 });
 
 //@ft:off

@@ -70,6 +70,9 @@
     <span>{{usernameof}}</span>
     <span><img src="{{userphotoof}}" class="img-rounded"></span>
     at {{fromnow created}}
+    <span>answers {{count answers}}</span>
+    <span>comments {{count comments}}</span>
+    <span>votes {{count votes}}</span>
     {{#each tags}}
     <button class="btn">
       {{text}}
@@ -119,6 +122,7 @@
   {{/each}}
   at {{fromnow created}}
   by <span>{{usernameof}}</span>
+  <div><button class="vote-up icon-arrow-up"></button>{{count votes}}<button class="vote-down icon-arrow-down"></button></div>
   {{#each comments}}
     <div>{{content}} - {{fromnow created}} - {{usernameof}} - <img src="{{userphotoof}}" class="img-rounded"/><span data-question-id="{{../permalink}}{{question_id}}" class="icon-remove-sign"></span></div>
   {{/each}}
@@ -139,7 +143,6 @@
     <button class="btn-add-answer btn-primary" type="button">Post Your Answer</button>
   </div>
   {{/with}}
-  
 </template>
 
 <template name="new">
