@@ -99,6 +99,10 @@ Template.questionview.helpers({
     return Questions.findOne({
       _id : Session.get('question_id')
     });
+  }, answers : function() {
+    return Answers.find({
+      question_id : Session.get('question_id')
+    });
   }
 });
 Template.questionview.events({
@@ -114,9 +118,45 @@ Template.questionview.events({
         'comments' : {
           content: content,
           created: new Date(),
-          user_id: Meteor.userId()
+          user_id: Meteor.userId(),
+          _id: Meteor.uuid()
         }
       }
+    });
+  },
+  'click .comment' : function(e) {
+    var comment = e.currentTarget;
+    $(comment).find('.comment-group').show();
+  }, 
+  'click .icon-remove-sign' : function(e) {
+    var question_id = $(e.target).data('question-id');
+    console.log("questionid" + question_id);
+    //@ft:off
+    Questions.update({_id:question_id, 'comments._id':this._id}, {
+      $pull: {comments: {_id:this._id}}
+    });
+  },
+  //@ft:on
+  'click .answer' : function(e) {
+    var answerBox = e.currentTarget;
+    var content = $(answerBox).find('.input-add-answer').val();
+    console.log(content);
+    if (!content)
+      return;
+    //@ft:off
+    console.log(this.data);
+    answer_id = Answers.insert({
+      content : content, 
+      user_id : Meteor.userId(), 
+      question_id : this._id,
+      created : new Date(), 
+      updated : new Date()
+    });
+    Questions.update({_id:this._id}, {
+      $push : {answers: answer_id}
+    });
+    Meteor.users.update({_id:Meteor.userId()}, {
+      $push : {answers: answer_id}
     });
     //@ft:on
   }
@@ -156,7 +196,9 @@ Template.new.events({
     });
 
     console.log('push topic to user');
-    Meteor.users.update({ _id : Meteor.userId() }, {
+    Meteor.users.update({
+      _id : Meteor.userId()
+    }, {
       $push : {
         'questions' : topic_id
       }

@@ -120,13 +120,26 @@
   at {{fromnow created}}
   by <span>{{usernameof}}</span>
   {{#each comments}}
-    <div>{{content}} - {{fromnow created}} - {{usernameof}} - <img src="{{userphotoof}}" class="img-rounded"/></div>
+    <div>{{content}} - {{fromnow created}} - {{usernameof}} - <img src="{{userphotoof}}" class="img-rounded"/><span data-question-id="{{../permalink}}{{question_id}}" class="icon-remove-sign"></span></div>
   {{/each}}
-  <div class="reply">
-    <textarea class="input-add-comment"></textarea>
-    <button class="btn-add-comment btn-primary">Add Comment</button>
+  <div class="comment">
+    <div class="comment-link"><a href="#">Add a comment?</a></div>
+    <div class="comment-group" style="display: none">
+      <textarea class="input-add-comment"></textarea>
+      <button class="btn-add-comment btn-primary" type="button">Add Comment</button>
+    </div>
+  </div>
+  {{#each answers}}
+    <div>{{content}}</div>
+    <div>answered {{fromnow created}}</div>
+    <div><img src="{{userphotoof}}" class="img-rounded"/>{{usernameof}}</div>
+  {{/each}}
+  <div class="answer">
+    <textarea class="input-add-answer"></textarea>
+    <button class="btn-add-answer btn-primary" type="button">Post Your Answer</button>
   </div>
   {{/with}}
+  
 </template>
 
 <template name="new">

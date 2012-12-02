@@ -19,7 +19,8 @@ Meteor.startup(function() {
     return Meteor.users.find({}, {
       fields : {
         'questions' : 1,
-        'tags': 1
+        'tags': 1,
+        'answers': 1
       }
     });
   });

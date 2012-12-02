@@ -1,5 +1,6 @@
 Questions = new Meteor.Collection("questions");
 Tags = new Meteor.Collection("tags");
+Answers = new Meteor.Collection("answers");
 
 simpleAcl = {
   insert: function() {
@@ -14,5 +15,6 @@ simpleAcl = {
 };
 
 Questions.allow(simpleAcl);
+Answers.allow(simpleAcl);
 Tags.allow(simpleAcl);
 Meteor.users.allow(simpleAcl);
