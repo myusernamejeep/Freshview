@@ -85,7 +85,7 @@ create_today = function() {
 create_tomorrow = function() {
   var today = new create_today();
   var tomorrow = new Date();
-  tomorrow.setDate(today.getDate()+1);
+  tomorrow.setDate(today.getDate() + 1);
   return tomorrow;
 };
 
@@ -230,7 +230,7 @@ Template.questionview.events({
     if (!Questions.find({_id:this._id, 'votes.user_id':Meteor.userId()}).count()) {
       return;
     }
-    Questions.update({_id:question_id, 'votes.user_id':Meteor.userId()}, {
+    Questions.update({_id:this._id, 'votes.user_id':Meteor.userId()}, {
       $pull: {votes: {user_id:Meteor.userId()}}
     });
   }
@@ -275,7 +275,9 @@ Template.new.events({
       _id : Meteor.userId()
     }, {
       $push : {
-        'questions' : { question_id : topic_id }
+        'questions' : {
+          question_id : topic_id
+        }
       }
     });
 
@@ -301,6 +303,10 @@ Template.new.events({
       Tags.update({ _id : tag_id }, {
         $push : {  questions : {question_id:topic_id, created : new Date()} }
       });
+    });
+    
+    Router.navigate("questions/" + topic_id, {
+      trigger : true
     });
   }
 });
@@ -338,7 +344,7 @@ FVRouter = Backbone.Router.extend({
   }, show_question : function(id) {
     Session.set('main_template_name', 'question');
     Session.set('question_id', id);
-  }, show_questions_with_tag: function(tag_text){
+  }, show_questions_with_tag : function(tag_text) {
     Session.set('main_template_name', 'questions');
     Session.set('tag_text', tag_text);
   }
