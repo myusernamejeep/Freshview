@@ -1,7 +1,17 @@
 Template.questionsview.helpers({
+  //@ft:off
   questions : function() {
-    return Questions.find();
-  }
+    var tag_text = Session.get('tag_text');
+      if (tag_text) {
+        var tag = Tags.findOne({text:tag_text});
+        var tag_id = 0;
+        if (tag) tag_id = tag._id;
+        console.log(tag_id);
+        return Questions.find({'tags.tag_id': tag_id});
+      }
+      return Questions.find();
+    }
+  //@ft:on
 });
 
 Template.tagsview.tags = function() {
@@ -64,6 +74,21 @@ userphotoof = function(userId) {
   void 0;
 };
 
+create_today = function() {
+  var today = new Date();
+  today.setHours(0);
+  today.setMinutes(0);
+  today.setSeconds(0);
+  return today;
+};
+
+create_tomorrow = function() {
+  var today = new create_today();
+  var tomorrow = new Date();
+  tomorrow.setDate(today.getDate()+1);
+  return tomorrow;
+};
+
 view_helpers = {
   usernameof : function() {
     return usernameof(this.user_id);
@@ -84,6 +109,16 @@ view_helpers = {
       }));
     });
     return tags;
+  }, counttoday : function(items) {
+    var today = create_today();
+    var tomorrow = create_tomorrow();
+    if (items) {
+      return _.filter(items, function(item) {
+        var created = new Date(item.created);
+        return created > today && tomorrow > created;
+      }).length;
+    }
+    return 0;
   }
 };
 
@@ -91,7 +126,24 @@ Template.question_item.helpers(view_helpers);
 
 Template.tag_item.helpers(view_helpers);
 
+Template.tag_button.events({
+  'click .tag-button' : function() {
+    console.log(this);
+    Router.navigate("questions/tagged/" + this.text, {
+      trigger : true
+    });
+  }
+});
+
 Template.usersview.helpers(view_helpers);
+
+Template.user_item.helpers({
+  tagof : function() {
+    return Tags.findOne({
+      _id : this.tag_id
+    });
+  }
+});
 
 Template.questionview.helpers(view_helpers);
 Template.questionview.helpers({
@@ -222,7 +274,7 @@ Template.new.events({
       _id : Meteor.userId()
     }, {
       $push : {
-        'questions' : topic_id
+        'questions' : { question_id : topic_id }
       }
     });
 
@@ -246,7 +298,7 @@ Template.new.events({
       }
       console.log("update questions in tags");
       Tags.update({ _id : tag_id }, {
-        $push : {  questions : topic_id }
+        $push : {  questions : {question_id:topic_id, created : new Date()} }
       });
     });
   }
@@ -276,7 +328,8 @@ FVRouter = Backbone.Router.extend({
   //@ft:off
   routes : {
     ":group" : 'show_group', 
-    "questions/:id" : 'show_question'
+    "questions/:id" : 'show_question',
+    "questions/tagged/:id" : 'show_questions_with_tag'
   },
   //@ft:on
   show_group : function(group) {
@@ -284,6 +337,9 @@ FVRouter = Backbone.Router.extend({
   }, show_question : function(id) {
     Session.set('main_template_name', 'question');
     Session.set('question_id', id);
+  }, show_questions_with_tag: function(tag_text){
+    Session.set('main_template_name', 'questions');
+    Session.set('tag_text', tag_text);
   }
 });
 
