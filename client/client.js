@@ -96,11 +96,11 @@ view_helpers = {
     return userphotoof(this.user_id);
   }, fromnow : function(t) {
     return moment.utc(t).fromNow();
-  }, count : function(items) {
+  }, countof : function(items) {
     if (items)
       return items.length;
     return 0;
-  }, tags : function() {
+  }, tagsof : function() {
     var tagIds = this.tags;
     var tags = [];
     _.each(tagIds, function(tag) {
@@ -137,6 +137,7 @@ Template.tag_button.events({
 
 Template.usersview.helpers(view_helpers);
 
+Template.user_item.helpers(view_helpers);
 Template.user_item.helpers({
   tagof : function() {
     return Tags.findOne({

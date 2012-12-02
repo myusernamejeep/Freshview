@@ -101,10 +101,10 @@
       <span>{{usernameof}}</span>
       <span><img src="{{userphotoof}}" class="img-rounded"></span>
       at {{fromnow created}}
-      <span>answers {{count answers}}</span>
-      <span>comments {{count comments}}</span>
-      <span>votes {{count votes}}</span>
-      {{#each tags}}
+      <span>answers {{countof answers}}</span>
+      <span>comments {{countof comments}}</span>
+      <span>votes {{countof votes}}</span>
+      {{#each tagsof}}
       {{> tag_button}}
       {{/each}}
     </div>
@@ -119,7 +119,7 @@
   <template name="tag_item">
     <div class="tag">
       {{> tag_button}}
-      X {{count questions}}
+      X {{countof questions}}
       <div>today {{counttoday questions}}</div>
     </div>
   </template>
@@ -138,6 +138,8 @@
   <template name="user_item">
     <div class="user">
       {{profile.facebook.name}} <img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" class="img-rounded">
+      <div>Questions:{{countof questions}}</div>
+      <div>Answered:{{countof answers}}</div>
       {{#each tags}}
         {{#with tagof}}
           {{> tag_button}}
@@ -154,14 +156,14 @@
     <div>
       {{content}}
     </div>
-    {{#each tags}}
+    {{#each tagsof}}
     {{> tag_button}}
     {{/each}}
     at {{fromnow created}}
     by <span>{{usernameof}}</span>
     <div>
       <button class="vote-up icon-arrow-up"></button>
-      {{count votes}}<button class="vote-down icon-arrow-down"></button>
+      {{countof votes}}<button class="vote-down icon-arrow-down"></button>
     </div>
     {{#each comments}}
     <div>
