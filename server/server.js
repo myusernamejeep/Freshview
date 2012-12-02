@@ -20,7 +20,8 @@ Meteor.startup(function() {
       fields : {
         'questions' : 1,
         'tags': 1,
-        'answers': 1
+        'answers': 1,
+        'created': 1
       }
     });
   });

@@ -47,6 +47,8 @@ Template.freshview.helpers({
     return Session.get('main_template_name') === 'users';
   }, is_question_view : function() {
     return Session.get('main_template_name') === 'question';
+  }, is_user_view : function() {
+    return Session.get('main_template_name') === 'user';
   }
 });
 
@@ -66,6 +68,11 @@ usernameof = function(userId) {
   void 0;
 };
 
+questionof = function(question_id) {
+  return Questions.findOne({
+    _id : question_id
+  });
+}
 userphotoof = function(userId) {
   var _ref;
   return ( _ref = Meteor.users.findOne({
@@ -94,6 +101,8 @@ view_helpers = {
     return usernameof(this.user_id);
   }, userphotoof : function(size) {
     return userphotoof(this.user_id);
+  }, questionof : function() {
+    return questionof(this.question_id);
   }, fromnow : function(t) {
     return moment.utc(t).fromNow();
   }, countof : function(items) {
@@ -144,6 +153,26 @@ Template.user_item.helpers({
       _id : this.tag_id
     });
   }
+});
+Template.userview.helpers(view_helpers);
+Template.userview.helpers({
+  user : function() {
+    return Meteor.users.findOne({
+      _id : Session.get('user_id')
+    });
+  }, limit_answers : function() {
+    var user_id = Session.get('user_id');
+    var answers = Answers.find({user_id:user_id}, {sort: {votes: -1}});
+    return answers.fetch().slice(0, 5);
+  }, limit_questions : function() {
+    var user_id = Session.get('user_id');
+    var questions = Questions.find({user_id:user_id}, {sort: {votes: -1}});
+    return questions.fetch().slice(0, 5);
+  }
+});
+
+Template.userview.events({
+
 });
 
 Template.questionview.helpers(view_helpers);
@@ -336,7 +365,8 @@ FVRouter = Backbone.Router.extend({
   routes : {
     ":group" : 'show_group', 
     "questions/:id" : 'show_question',
-    "questions/tagged/:id" : 'show_questions_with_tag'
+    "questions/tagged/:id" : 'show_questions_with_tag',
+    "users/:id" : 'show_user'
   },
   //@ft:on
   show_group : function(group) {
@@ -347,6 +377,9 @@ FVRouter = Backbone.Router.extend({
   }, show_questions_with_tag : function(tag_text) {
     Session.set('main_template_name', 'questions');
     Session.set('tag_text', tag_text);
+  }, show_user : function(user_id) {
+    Session.set('main_template_name', 'user');
+    Session.set('user_id', user_id);
   }
 });
 
