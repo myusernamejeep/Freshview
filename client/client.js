@@ -126,7 +126,7 @@ view_helpers = {
 Template.question_item.helpers(view_helpers);
 
 Template.tag_item.helpers(view_helpers);
-Template.tag_item.events({
+Template.tag_button.events({
   'click .tag-button': function() {
     console.log(this);
     Router.navigate("questions/tagged/"+this.text, {

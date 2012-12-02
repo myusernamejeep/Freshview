@@ -74,9 +74,7 @@
     <span>comments {{count comments}}</span>
     <span>votes {{count votes}}</span>
     {{#each tags}}
-    <button class="btn">
-      {{text}}
-    </button>
+      {{> tag_button}}
     {{/each}}
   </div>
 </template>
@@ -89,12 +87,15 @@
 </template>
 <template name="tag_item">
   <div class="tag">
-    <button class="btn tag-button">
-      {{text}}
-    </button>
+    {{> tag_button}}
     X {{count questions}}
     <div>today {{counttoday questions}}</div>
   </div>
+</template>
+<template name="tag_button">
+  <button class="btn tag-button">
+    {{text}}
+  </button>
 </template>
 
 <!-- users view  -->
@@ -117,9 +118,7 @@
     {{content}}
   </div>
   {{#each tags}}
-  <button class="btn">
-    {{text}}
-  </button>
+  {{> tag_button}}
   {{/each}}
   at {{fromnow created}}
   by <span>{{usernameof}}</span>
