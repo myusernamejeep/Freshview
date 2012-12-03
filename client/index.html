@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="http://www.zurb.com/assets/zurb.mega-drop.css">
     <link rel="stylesheet" href="/stylesheets/foundation.min.css">
     <link rel="stylesheet" href="/stylesheets/app.css">
-    <link href="/client/lib/select2/select2.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/client/lib/select2/select2.css"/>
     <link rel="stylesheet" href="/stylesheets/custom.css"/>
     <script src="/javascripts/modernizr.foundation.js"></script>
   
@@ -56,18 +56,19 @@
     </div>
     <header>
       <div class="row">
-        <div class="twelve columns">
-          <h1>Programmers</h1>
-        </div>
+          <div class="four columns"><h1>Programmers</h1></div>
+          <div class="eight columns">
+            <ul class="tabs pill">
+              {{> groupview}}
+            </ul>
+          </div>
       </div>
     </header>
     <section id="mainContent" class="example">
       
     </section>
     
-    <ul class="nav nav-pills">
-      {{> groupview}}
-    </ul>
+    
     {{> freshview}}
 
   <!-- Included JS Files (Compressed) -->
@@ -118,7 +119,7 @@
 
   <template name="groupview">
     {{#each groups}}
-    <li class="">
+    <li>
       <a href="/{{group_link}}">{{group_name}}</a>
     </li>
     {{/each}}
