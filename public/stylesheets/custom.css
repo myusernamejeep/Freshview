@@ -3,6 +3,18 @@ header {
   padding: 22px 0;
 }
 
+header .eight, header .four {
+	display:inline;
+	vertical-align: middle;
+}
+
 .top-bar {
   margin: 0px;
+}
+
+.top-bar .attached {
+padding: 0 15px;
+width: 1000px;
+max-width: 100%;
+z-index: 0 !important;
 }
