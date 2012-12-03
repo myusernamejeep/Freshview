@@ -180,6 +180,14 @@ Template.questionview.helpers({
   question_id : function() {
     return Session.get('question_id');
   }, question : function() {
+    console.log(Session.get('question_id'));
+    Questions.update({
+      _id: Session.get('question_id')
+    }, {
+      $inc: {
+        views: 1
+      }
+    });
     return Questions.findOne({
       _id : Session.get('question_id')
     });
@@ -314,7 +322,7 @@ Template.new.events({
     console.log(tagIds);
     //@ft:on
     topic_id = Questions.insert({
-      title : title, content : content, tags : tagIds, user_id : Meteor.userId(), created : new Date(), updated : new Date()
+      title : title, content : content, tags : tagIds, user_id : Meteor.userId(), created : new Date(), updated : new Date(), views: 0
     });
 
     console.log('push topic to user');
