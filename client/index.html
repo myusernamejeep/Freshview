@@ -222,8 +222,8 @@
     at {{fromnow created}}
     by <span>{{usernameof}}</span>
     <div>
-      <button class="vote-up icon-arrow-up"></button>
-      {{countof votes}}<button class="vote-down icon-arrow-down"></button>
+      <button class="question-vote-up icon-arrow-up"></button>
+      {{countof votes}}<button class="question-vote-down icon-arrow-down"></button>
     </div>
     {{#each comments}}
     <div>
@@ -242,7 +242,9 @@
       </div>
     </div>
     {{#each answers}}
-    <div>
+      <button class="answer-vote-up icon-arrow-up"></button>
+        {{countof votes}}<button class="answer-vote-down icon-arrow-down"></button>
+      <div>
       {{content}}
     </div>
     <div>
