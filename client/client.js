@@ -242,9 +242,16 @@ Template.questionview.events({
     Meteor.users.update({_id:Meteor.userId()}, {
       $push : {answers: answer_id}
     });
-    
   },
-  'click .vote-up': function() {
+  'click .question-vote-down': function() {
+    if (!Questions.find({_id:this._id, 'votes.user_id':Meteor.userId()}).count()) {
+      return;
+    }
+    Questions.update({_id:this._id, 'votes.user_id':Meteor.userId()}, {
+      $pull: {votes: {user_id:Meteor.userId()}}
+    });
+  },
+  'click .question-vote-up': function() {
     if (Questions.find({_id:this._id, 'votes.user_id':Meteor.userId()}).count()) {
       return;
     }
@@ -255,14 +262,25 @@ Template.questionview.events({
       }}      
     })
   },
-  'click .vote-down': function() {
-    if (!Questions.find({_id:this._id, 'votes.user_id':Meteor.userId()}).count()) {
+  'click .answer-vote-up': function() {
+    if (Answers.find({_id:this._id, 'votes.user_id':Meteor.userId()}).count()) {
       return;
     }
-    Questions.update({_id:this._id, 'votes.user_id':Meteor.userId()}, {
+    Answers.update({_id:this._id}, {
+      $push : {votes: {
+        user_id: Meteor.userId(),
+        created: new Date()
+      }}      
+    })
+  },
+  'click .answer-vote-down': function() {
+    if (!Answers.find({_id:this._id, 'votes.user_id':Meteor.userId()}).count()) {
+      return;
+    }
+    Answers.update({_id:this._id, 'votes.user_id':Meteor.userId()}, {
       $pull: {votes: {user_id:Meteor.userId()}}
     });
-  }
+  },
   //@ft:on
 });
 
