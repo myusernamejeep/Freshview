@@ -39,8 +39,8 @@
           <li class="show-for-small">
             <a href="#">Home</a>
           </li>
-          <li>
-            {{> topbar}}
+          <li class="custom-login">
+              {{> topbar}}
           </li>
           <li>
             <a href="#">Add-ons</a>
@@ -56,12 +56,10 @@
     </div>
     <header>
       <div class="row">
-          <div class="four columns"><h1>Programmers</h1></div>
-          <div class="eight columns">
-            <ul class="tabs pill">
-              {{> groupview}}
-            </ul>
-          </div>
+          <span class="four columns">Programmers</span>
+          <ul class="eight columns nav">
+            {{> groupview}}
+          </ul>
       </div>
     </header>
     <section id="mainContent" class="example">
@@ -80,7 +78,9 @@
   <template name="topbar">
     {{#if logined}}
     {{#with member}}
-    {{profile.facebook.name}} <img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" class="img-rounded">
+    <div class="custom-username"><a href="#">{{profile.facebook.name}}</a></div>
+    
+    <img class="img-rounded" src="https://graph.facebook.com/{{profile.facebook.username}}/picture">
     <button id="btn-logout" class="button">
       logout
     </button>
@@ -119,9 +119,7 @@
 
   <template name="groupview">
     {{#each groups}}
-    <li>
-      <a href="/{{group_link}}">{{group_name}}</a>
-    </li>
+    <li><a href="/{{group_link}}">{{group_name}}</a></li>
     {{/each}}
   </template>
 

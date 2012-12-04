@@ -1,11 +1,48 @@
-header {
-  background-color: #2BA6CB;
-  padding: 22px 0;
+.custom-username, .custom-login img, .custom-login button{
+  display:inline-block;
+  vertical-align: middle;
 }
 
-header .eight, header .four {
-	display:inline;
-	vertical-align: middle;
+header {
+  background-color: #2BA6CB;
+  padding: 10px 0;
+}
+header .row {
+  height:80px;
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 5px;
+}
+header .columns {
+  top:50%;
+  height:30px;
+  margin-top:-15px;
+  vertical-align: middle;
+}
+
+header .four{
+  font-size:30px;
+}
+
+header ul{
+  list-style-type: none;
+}
+
+header li{
+  float:left;
+  margin-right:10px;
+  background:white;
+  padding:0px 5px;
+}
+header li:hover{
+  background:green;
+}
+
+header a{
+  color:black;
+  text-decoration: none;
+}
+header a:hover{
+  color:black;
 }
 
 .top-bar {
