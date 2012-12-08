@@ -1,0 +1,43 @@
+  <!-- users view  -->
+  <template name="usersview">
+    {{#each users}}
+    {{> user_item}}
+    {{/each}}
+  </template>
+  <template name="user_item">
+    <div class="user">
+      <a href="/users/{{_id}}">{{profile.facebook.name}}</a> <img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" class="img-rounded">
+      <div>Questions:{{countof questions}}</div>
+      <div>Answered:{{countof answers}}</div>
+      {{#each tags}}
+        {{#with tagof}}
+          {{> tag_button}}
+        {{/with}}
+        X{{count}}
+      {{/each}}
+    </div>
+  </template>
+  
+  <!-- user view -->
+  <template name="userview">
+    {{#with user}}
+      <div>
+        <div><span>Name:</span>{{profile.facebook.name}}</div>
+        <div><span>Email:</span>{{profile.facebook.email}}</div>
+        <div><span>Gender:</span>{{profile.facebook.gender}}</div>
+        <div>Joined {{fromnow created}}</div>
+      </div>
+    {{/with}}
+      <div>
+        {{#with user}}<h3>{{countof answers}} Answers</h3>{{/with}}
+        {{#each limit_answers}}
+          <spa>{{countof votes}} votes </spa><a href="/questions/{{question_id}}">{{#with questionof}}{{title}}{{/with}}</a>
+        {{/each}}
+      </div>
+      <div>
+        {{#with user}}<h3>{{countof questions}} Questions</h3>{{/with}}
+        {{#each limit_questions}}
+          <spa>{{countof votes}} votes </spa><a href="/questions/{{_id}}">{{title}}</a>
+        {{/each}}
+      </div>
+  </template>

@@ -1,0 +1,18 @@
+  <!-- tags view  -->
+  <template name="tagsview">
+    {{#each tags}}
+    {{> tag_item}}
+    {{/each}}
+  </template>
+  <template name="tag_item">
+    <div class="tag">
+      {{> tag_button}}
+      X {{countof questions}}
+      <div>today {{counttoday questions}}</div>
+    </div>
+  </template>
+  <template name="tag_button">
+    <button class="btn tag-button">
+      {{text}}
+    </button>
+  </template>
