@@ -1,3 +1,24 @@
+Template.freshview.helpers({
+  renderPage : function() {
+    var name = Session.get('main_template_name');
+    var templateName = name + "view";
+    if(Session.equals('main_template_name', 'question')) {
+      console.log(Session.get('question_id'));
+      Questions.update({
+        _id: Session.get('question_id')
+      }, {
+        $inc: {
+          views: 1
+        }
+      });
+    }
+    if (Template[templateName])
+      return new Handlebars.SafeString(Template[templateName]());
+    else
+      return new Handlebars.SafeString(Template['questionsview']());
+  }
+});
+
 Template.questionsview.helpers({
   //@ft:off
   questions : function() {
@@ -35,22 +56,6 @@ Template.groupview.groups = function() {
     group_link : 'unanswered', group_name : 'UnAnswered'
   }];
 };
-
-Template.freshview.helpers({
-  is_questions_view : function() {
-    return Session.get('main_template_name') === 'questions';
-  }, is_new_view : function() {
-    return Session.get('main_template_name') === 'new';
-  }, is_tags_view : function() {
-    return Session.get('main_template_name') === 'tags';
-  }, is_users_view : function() {
-    return Session.get('main_template_name') === 'users';
-  }, is_question_view : function() {
-    return Session.get('main_template_name') === 'question';
-  }, is_user_view : function() {
-    return Session.get('main_template_name') === 'user';
-  }
-});
 
 formData = function(form) {
   var data = {};
@@ -180,14 +185,6 @@ Template.questionview.helpers({
   question_id : function() {
     return Session.get('question_id');
   }, question : function() {
-    console.log(Session.get('question_id'));
-    Questions.update({
-      _id: Session.get('question_id')
-    }, {
-      $inc: {
-        views: 1
-      }
-    });
     return Questions.findOne({
       _id : Session.get('question_id')
     });
@@ -293,7 +290,7 @@ Template.questionview.events({
 });
 
 //@ft:off
-Template.new.events({
+Template.newview.events({
   //@ft:on
   'click .submit-question' : function(e) {
     e.preventDefault();

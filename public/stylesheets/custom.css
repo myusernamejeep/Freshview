@@ -1,3 +1,7 @@
+button{
+  border-radius: 3px;
+}
+
 .custom-username, .custom-login img, .custom-login button{
   display:inline-block;
   vertical-align: middle;
