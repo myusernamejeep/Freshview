@@ -1,21 +1,11 @@
   <head>
     <meta charset="utf-8">
-    <!-- Set the viewport width to device width for mobile -->
-  <meta name="viewport" content="width=device-width" />
+<!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <title>Freshview</title>
-    
-    <!-- Included CSS Files (Uncompressed) -->
-    <!--
-    <link rel="stylesheet" href="stylesheets/foundation.css">
-    -->
-    
-    <!-- Included CSS Files (Compressed) -->
 
-    <link rel="stylesheet" href="/stylesheets/foundation.min.css">
     <link rel="stylesheet" href="/stylesheets/app.css">
-    <link rel="stylesheet" href="/client/lib/select2/select2.css"/>
-    <link rel="stylesheet" href="/stylesheets/custom.css"/>
-    <script src="/javascripts/modernizr.foundation.js"></script>
   
     <!-- IE Fix for HTML5 Tags -->
     <!--[if lt IE 9]>
@@ -26,43 +16,89 @@
     <script src="/client/lib/select2/select2.js" type="text/javascript"></script>
   </head>
   <body>
-    <div class="top-bar">
-      
-        <div class="name" onclick="void(0);">
-          <span>
-            <a href="#">FreshView</a>
-            <a href="#" class="toggle-nav"></a>
-          </span>
-        </div>
+  <div class="top-bar">
+  <div class="row">
+  <div class="twelve columns">
+    <nav class="top-bar">
+      <ul>
+        <!-- Title Area -->
+        <li class="name">
+          <h1>
+            <a href="#">
+              FreshView
+            </a>
+          </h1>
+        </li>
+        <li class="toggle-topbar"><a href="#"></a></li>
+      </ul>
+
+      <section>
+        <!-- Right Nav Section -->
         <ul class="right">
-          <li class="show-for-small">
-            <a href="#">Home</a>
-          </li>
+          <li class="divider show-for-medium-and-up"></li>
           <li class="custom-login">
               {{> topbar}}
           </li>
-          <li>
-            <a href="#">Add-ons</a>
+          <li class="has-dropdown">
+            <a href="#">Item 2</a>
+            <ul class="dropdown">
+              <li><label>Section Name</label></li>
+              <li><a href="#" class="">Level 1</a></li>
+              <li><a href="#">Dropdown Option</a></li>
+              <li><a href="#">Dropdown Option</a></li>
+              <li class="divider"></li>
+              <li><label>Section Name</label></li>
+              <li><a href="#">Dropdown Option</a></li>
+              <li><a href="#">Dropdown Option</a></li>
+              <li><a href="#">Dropdown Option</a></li>
+              <li class="divider"></li>
+              <li><a href="#">See all &rarr;</a></li>
+            </ul>
           </li>
           <li>
-            <a href="#">Case Studies</a>
+            <a href="#">Item 2 long</a>
           </li>
           <li>
-            <a href="#">Docs</a>
+            <a href="#">Item 2</a>
           </li>
-        </ul>
-       
-    </div>
+      </section>
+    </nav>
+  </div>
+</div>
+  </div>
+    
     <header>
       <div class="row">
-          <span class="four columns">Programmers</span>
-          <ul class="eight columns nav">
-            {{> groupview}}
+        <div class="twelve columns">
+          <h2>Programmers</h2>
+          <ul>
+              {{> groupview}}              
           </ul>
+        </div>
       </div>
     </header>
-    <section id="mainContent" class="example"></section>
-    {{> freshview}}
+    
+    <div class="row">
+      <div class="nine columns">
+        
+        {{> freshview}}
+      </div>
+      
+      <div class="three columns">
+        <h4>Getting Started</h4>
+        <p>We're stoked you want to try Foundation! To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.</p>
+  
+        <h4>Other Resources</h4>
+        <p>Once you've exhausted the fun in this document, you should check out:</p>
+        <ul class="disc">
+          <li><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</li>
+          <li><a href="http://github.com/zurb/foundation">Foundation on Github</a><br />Latest code, issue reports, feature requests and more.</li>
+          <li><a href="http://twitter.com/foundationzurb">@foundationzurb</a><br />Ping us on Twitter if you have questions. If you build something with this we'd love to see it (and send you a totally boss sticker).</li>
+        </ul>
+      </div>
+    </div>
+    
+    
 
   <!-- Included JS Files (Compressed) -->
   <script src="/javascripts/foundation.min.js"></script>
@@ -70,11 +106,12 @@
   <!-- Initialize JS Plugins -->
   <script src="javascripts/app.js"></script>
   </body>
+  
+  <!-- TEMPLATE topbar -->
   <template name="topbar">
     {{#if logined}}
     {{#with member}}
-    <div class="custom-username"><a href="#">{{profile.facebook.name}}</a></div>
-    
+    <div><a href="#">{{profile.facebook.name}}</a></div> 
     <img class="img-rounded" src="https://graph.facebook.com/{{profile.facebook.username}}/picture">
     <button id="btn-logout" class="button">
       logout
@@ -83,17 +120,13 @@
     {{else}}<a id="fb-login" href="#" class="btn btn-primary">Facebook</a>
     {{/if}}
   </template>
-
+  
+  <!-- TEMPLATE freshview -->
   <template name="freshview">
-    <div id="Wrapper">
-      <div class="content">
-        <div id="Main">
-          {{renderPage}}
-        </div>
-      </div>
-    </div>
+    {{renderPage}}
   </template>
-
+  
+  <!-- TEMPLATE groupview -->
   <template name="groupview">
     {{#each groups}}
     <li><a href="/{{group_link}}">{{group_name}}</a></li>
