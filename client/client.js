@@ -57,6 +57,15 @@ Template.groupview.groups = function() {
   }];
 };
 
+Template.groupview.events({
+  'click a' : function(e) {
+    e.preventDefault();
+    Router.navigate($(e.target).attr('href'), {
+      trigger : true
+    });
+  }
+});
+
 formData = function(form) {
   var data = {};
   var array = $(form).serializeArray();
