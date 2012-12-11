@@ -15,18 +15,3 @@ Template.tag_button.events({
   }
 });
 
-Meteor.subscribe('tags', function() {
-  var select = $('#new-question-form').find('input[name="tags"]').select2({
-    id : '_id', createSearchChoice : function(term, data) {
-      console.log('term' + term);
-      console.log(data);
-      if ($(data).filter(function() {
-        return this.text.localeCompare(term) === 0;
-      }).length === 0) {
-        return {
-          _id : term, text : term
-        };
-      }
-    }, data : Tags.find().fetch(), multiple : true
-  });
-});

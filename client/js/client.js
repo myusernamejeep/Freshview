@@ -1,3 +1,15 @@
+if (typeof Handlebars !== 'undefined') {
+  Handlebars.registerHelper('truncate', function(count, text) {
+    if (! _.isString(text))
+      text = '';
+	if (text.length < count) {
+	  return text;
+	} else {
+	  return text.substring(0, count - 3) + "...";
+	}
+  });
+}
+
 Template.freshview.helpers({
   renderPage : function() {
     var name = Session.get('main_template_name');
@@ -94,5 +106,21 @@ Meteor.startup(function() {
   Meteor.subscribe('allUserData');
   Backbone.history.start({
     pushState : true
+  });
+});
+
+Meteor.subscribe('tags', function() {
+  var select = $('#new-question-form').find('input[name="tags"]').select2({
+    id : '_id', createSearchChoice : function(term, data) {
+      console.log('term' + term);
+      console.log(data);
+      if ($(data).filter(function() {
+        return this.text.localeCompare(term) === 0;
+      }).length === 0) {
+        return {
+          _id : term, text : term
+        };
+      }
+    }, data : Tags.find().fetch(), multiple : true
   });
 });

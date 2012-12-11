@@ -16,7 +16,7 @@
   <template name="question_item">
     <div class="question">
       <a href="/questions/{{_id}}" class="name">{{title}}</a>
-      <span class="score">{{content}}</span>
+      <span>{{truncate 80 content}}</span>
       <span>{{usernameof}}</span>
       <span><img src="{{userphotoof}}" class="img-rounded"></span>
       at {{fromnow created}}
