@@ -6076,11 +6076,26 @@ header a:hover {
 }
 /* line 178, ../sass/app.scss */
 .question-summary .summary .tags {
-  line-height: 18px;
   float: left;
 }
-/* line 181, ../sass/app.scss */
-.question-summary .summary .tags .post-tag, .question-summary .summary .tags .post-text .post-tag, .question-summary .summary .tags .wmd-preview a.post-tag {
+/* line 182, ../sass/app.scss */
+.question-summary .summary .fr {
+  float: right;
+}
+/* line 185, ../sass/app.scss */
+.question-summary .summary .started {
+  color: #999;
+  float: right;
+  line-height: 18px;
+}
+
+/* line 193, ../sass/app.scss */
+.tags {
+  line-height: 18px;
+}
+
+/* line 197, ../sass/app.scss */
+.post-tag, .post-text .post-tag, .wmd-preview a.post-tag {
   color: #3E6D8E;
   background-color: #E0EAF1;
   border-bottom: 1px solid #3E6D8E;
@@ -6092,33 +6107,23 @@ header a:hover {
   line-height: 2.4;
   white-space: nowrap;
 }
-/* line 195, ../sass/app.scss */
-.question-summary .summary .fr {
-  float: right;
-}
-/* line 198, ../sass/app.scss */
-.question-summary .summary .started {
-  color: #999;
-  float: right;
-  line-height: 18px;
-}
 
-/* line 206, ../sass/app.scss */
+/* line 210, ../sass/app.scss */
 .user-info {
   height: 35px;
 }
-/* line 208, ../sass/app.scss */
+/* line 212, ../sass/app.scss */
 .user-info .user-action-time {
   margin-top: 2px;
   margin-bottom: 4px;
 }
-/* line 212, ../sass/app.scss */
+/* line 216, ../sass/app.scss */
 .user-info .user-gravatar32 {
   float: left;
   width: 32px;
   height: 32px;
 }
-/* line 217, ../sass/app.scss */
+/* line 221, ../sass/app.scss */
 .user-info .user-details {
   float: left;
   margin-left: 5px;
@@ -6127,8 +6132,89 @@ header a:hover {
   line-height: 17px;
 }
 
-/* line 226, ../sass/app.scss */
+/* line 230, ../sass/app.scss */
 .relativetime {
   font-weight: bold;
   text-decoration: none;
+}
+
+/* line 235, ../sass/app.scss */
+.votecell {
+  width: 60px;
+  vertical-align: top;
+}
+
+/* line 240, ../sass/app.scss */
+.vote {
+  text-align: center;
+}
+/* line 242, ../sass/app.scss */
+.vote span {
+  display: block;
+  color: #808185;
+  font-weight: bold;
+}
+/* line 247, ../sass/app.scss */
+.vote .vote-up-off, .vote .vote-up-on, .vote .vote-down-off, .vote .vote-down-on, .vote .star-on, .vote .star-off, .vote .comment-up-off, .vote .comment-up-on, .vote .comment-flag, .vote .flag-off, .vote .vote-accepted-off, .vote .vote-accepted-on {
+  text-indent: -9999em;
+  font-size: 1px;
+}
+/* line 251, ../sass/app.scss */
+.vote .vote-up-off, .vote .vote-down-off, .vote .vote-accepted-off, .vote .star-off, .vote .comment-up-off, .vote .flag-off {
+  cursor: pointer;
+}
+/* line 254, ../sass/app.scss */
+.vote .vote-up-off, .vote .vote-up-on, .vote .vote-down-off, .vote .vote-down-on, .vote .star-on, .vote .star-off {
+  background-position: 0px -265px;
+  display: block;
+  margin: 0 auto;
+  width: 41px;
+  height: 25px;
+}
+/* line 261, ../sass/app.scss */
+.vote .envelope-on, .vote .envelope-off, .vote .vote-up-off, .vote .vote-up-on, .vote .vote-down-off, .vote .vote-down-on, .vote .star-on, .vote .star-off, .vote .comment-up-off, .vote .comment-up-on, .vote .comment-flag, .vote .edited-yes, .vote a.cc-wiki-link, .vote .feed-icon, .vote .statsarrow, .vote .vote-accepted-off, .vote .vote-accepted-on, .vote .vote-accepted-bounty, .vote .badge-earned-check, .vote .delete-tag, .vote .grippie, .vote .expander-arrow-hide, .vote .expander-arrow-show, .vote .expander-arrow-small-hide, .vote .expander-arrow-small-show, .vote .anonymous-gravatar, .vote .badge1, .vote .badge2, .vote .badge3, .vote .add-interesting-tag-on, .vote .add-interesting-tag-off, .vote .fb-share, .vote .twitter-share, .vote .gp-share {
+  background-image: url("/images/sprites.png?v=5");
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+/* line 266, ../sass/app.scss */
+.vote .vote-count-post {
+  display: block;
+  font-size: 240%;
+}
+/* line 270, ../sass/app.scss */
+.vote .vote-down-off {
+  background-position: 0px -300px;
+}
+
+/* line 275, ../sass/app.scss */
+.comments {
+  border-top: dotted 1px #AAA;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  line-height: 135%;
+  color: #444;
+}
+/* line 281, ../sass/app.scss */
+.comments .comment {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: dotted 1px #DDD;
+  margin: 5px;
+}
+
+/* line 289, ../sass/app.scss */
+.comment-form.row {
+  margin: 0px;
+}
+/* line 291, ../sass/app.scss */
+.comment-form.row textarea {
+  height: 5em;
+  padding: 0px;
+}
+
+/* line 297, ../sass/app.scss */
+a {
+  text-decoration: none;
+  cursor: pointer;
 }

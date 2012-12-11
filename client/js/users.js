@@ -32,6 +32,4 @@ Template.userview.helpers({
   }
 });
 
-Template.userview.events({
-
-});
+Template.user_info.helpers(view_helpers);

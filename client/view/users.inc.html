@@ -41,3 +41,18 @@
         {{/each}}
       </div>
   </template>
+  
+  <!-- user info view -->
+  <template name="user_info">
+    <div class="started fr">
+      <div class="user-info user-hover">
+        <div class="user-action-time">asked <span title="{{fromnow created}}" class="relativetime">{{fromnow created}}</span></div>
+        <div class="user-gravatar32">
+          <a href="users/{{user_id}}" class="navigation-link"><div class=""><img src="{{userphotoof}}" alt="" width="32" height="32"></div></a>
+        </div>
+        <div class="user-details">
+          <a href="users/{{user_id}}" class="navigation-link">{{usernameof}}</a>
+        </div>
+      </div>
+    </div>
+  </template>

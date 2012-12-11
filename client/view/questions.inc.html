@@ -29,7 +29,7 @@
       	</div>
       	<div class="views" title="74 views">
        	  {{views}} views
-		</div>
+		    </div>
       </div>
       <div class="summary ten columns">
       	<h3>
@@ -39,20 +39,12 @@
        	  {{truncate 80 content}}    
         </div>
         <div class="tags t-entity-framework t-entity-framework-5 t-ef-migrations t-code-first-migrations">
-       	  {{#each tagsof}}
-		    {{> tag_button}}
-		  {{/each}}
+       	{{#each tagsof}}
+		      {{> tag_button}}
+		    {{/each}}
         </div>
-        <div class="started fr">
-          <div class="user-info user-hover">
-          <div class="user-action-time">asked <span title="{{fromnow created}}" class="relativetime">{{fromnow created}}</span>
-        </div>
-        <div class="user-gravatar32">
-          <a href="users/{{user_id}}" class="navigation-link"><div class=""><img src="{{userphotoof}}" alt="" width="32" height="32"></div></a>
-        </div>
-        <div class="user-details">
-          <a href="users/{{user_id}}" class="navigation-link">{{usernameof}}</a>
-        </div>
+        {{> user_info}}
+      </div>
     </div>
   </template>
   
@@ -60,33 +52,50 @@
   <template name="questionview">
     {{#with question}}
     <h3>{{title}}</h3>
-    <div>
-      {{content}}
-    </div>
-    {{#each tagsof}}
-    {{> tag_button}}
-    {{/each}}
-    at {{fromnow created}}
-    by <span>{{usernameof}}</span><span><img src="{{userphotoof}}"></span>
-    <div>
-      <button class="question-vote-up icon-arrow-up"></button>
-      {{countof votes}}<button class="question-vote-down icon-arrow-down"></button>
-    </div>
-    
-    {{#each comments}}
-    <div>
-      {{content}} - {{fromnow created}} - {{usernameof}} - <img src="{{userphotoof}}" class="img-rounded"/><span data-question-id="{{../permalink}}{{question_id}}" class="icon-remove-sign"></span>
-    </div>
-    {{/each}}
-    <div class="comment">
-      <div class="comment-link">
-        <a href="#">Add a comment?</a>
+    <div class="row">
+      <div class="votecell one column">
+        <div class="vote">
+          <a class="question-vote-up vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+          <span class="vote-count-post">{{countof votes}}</span>
+          <a class="question-vote-down vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+        </div>
       </div>
-      <div class="comment-group" style="display: none">
-        <textarea class="input-add-comment"></textarea>
-        <button class="btn-add-comment btn-primary" type="button">
-          Add Comment
-        </button>
+      <div class="postcell eleven columns">
+        <div>
+          <div class="post-text" >{{content}}</div>
+          <div class="post-taglist">
+            {{#each tagsof}}
+            {{> tag_button}}
+            {{/each}}  
+          </div>
+          <div class="fw" style="float: right">
+            {{> user_info}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="one column">
+      </div>
+      <div class="eleven columns">
+        <div class="comments">
+          {{#each comments}}
+            <div class="comment">
+              <div class="comment-text">
+                <span class="comment-copy">{{content}}</span>
+                <a href="/users/{{user_id}}" class="comment-user navigation-link">{{usernameof}}</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#"><span title="{{fromnow created}}" class="relativetime-clean">{{fromnow created}}</span></a></span>
+              </div>
+            </div>
+          {{/each}}
+          <a class="comments-link" title="ask author for clarification about this post">add comment</a>
+          <div class="comment-form row" style="display: none;">
+            <textarea class="input-add-comment ten columns"></textarea>
+            <button class="btn-add-comment" type="button">
+              Add Comment
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     {{#each answers}}

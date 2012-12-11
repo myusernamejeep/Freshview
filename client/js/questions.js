@@ -54,9 +54,14 @@ Template.questionview.events({
       }
     });
   },
-  'click .comment' : function(e) {
+  'click .comments' : function(e) {
+  	var commentLink = e.target;
+  	if (!$(commentLink).hasClass('comments-link')) {
+  		return;
+  	}
     var comment = e.currentTarget;
-    $(comment).find('.comment-group').show();
+    $(commentLink).hide();
+    $(comment).find('.comment-form').show();
   }, 
   'click .icon-remove-sign' : function(e) {
     var question_id = $(e.target).data('question-id');
