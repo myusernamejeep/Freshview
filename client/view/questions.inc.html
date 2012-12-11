@@ -98,18 +98,32 @@
         </div>
       </div>
     </div>
-    {{#each answers}}
-      <button class="answer-vote-up icon-arrow-up"></button>
-        {{countof votes}}<button class="answer-vote-down icon-arrow-down"></button>
-      <div>
-      {{content}}
+    <div class="answers">
+      <div class="answers-header">
+        <div class="subheader answers-subheader">
+            <h2>{{count answers}}</h2>
+        </div>
+      </div>
+      {{#each answers}}
+        <div class="row">
+          <div class="votecell one column">
+            <div class="vote">
+              <a class="answer-vote-up vote-up-off" title="This answer is useful (click again to undo)">up vote</a>
+              <span class="vote-count-post">{{countof votes}}</span>
+              <a class="answer-vote-down vote-down-off" title="This answer is not useful (click again to undo)">down vote</a>
+            </div>
+          </div>
+          <div class="postcell eleven columns">
+            <div>
+              <div class="post-text" >{{content}}</div>
+              <div class="fw" style="float: right">
+                {{> user_info}}
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
     </div>
-    <div>
-      answered {{fromnow created}}
-    </div>
-    <div><img src="{{userphotoof}}" class="img-rounded"/>{{usernameof}}
-    </div>
-    {{/each}}
     <div class="answer">
       <textarea class="input-add-answer"></textarea>
       <button class="btn-add-answer btn-primary" type="button">

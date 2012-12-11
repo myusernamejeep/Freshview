@@ -6218,3 +6218,9 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+
+/* line 302, ../sass/app.scss */
+.answers-header {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
