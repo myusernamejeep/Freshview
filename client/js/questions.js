@@ -17,6 +17,8 @@ Template.questionsview.helpers({
 
 //QUestion list item
 Template.question_item.helpers(view_helpers);
+Template.question_item.events(view_events);
+
 
 //Single question view
 Template.questionview.helpers(view_helpers);

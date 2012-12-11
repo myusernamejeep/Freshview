@@ -76,3 +76,12 @@ view_helpers = {
     return 0;
   }
 };
+
+view_events = {
+  'click a.navigation-link': function(e) {
+  	e.preventDefault();
+    Router.navigate($(e.target).attr('href'), {
+      trigger : true
+    });
+  }
+}
