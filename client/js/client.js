@@ -86,14 +86,17 @@ FVRouter = Backbone.Router.extend({
   },
   //@ft:on
   show_group : function(group) {
+  	Session.set('question_id', null);
+  	Session.set('tag_text', null);
     Session.set('main_template_name', group);
   }, show_question : function(id) {
+  	Session.set('question_id', id);
     Session.set('main_template_name', 'question');
-    Session.set('question_id', id);
   }, show_questions_with_tag : function(tag_text) {
+  	Session.set('tag_text', tag_text);
     Session.set('main_template_name', 'questions');
-    Session.set('tag_text', tag_text);
-  }, show_user : function(user_id) {
+  },
+  show_user : function(user_id) {
     Session.set('main_template_name', 'user');
     Session.set('user_id', user_id);
   }

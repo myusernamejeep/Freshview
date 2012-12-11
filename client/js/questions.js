@@ -7,6 +7,7 @@ Template.questionsview.helpers({
         var tag = Tags.findOne({text:tag_text});
         var tag_id = 0;
         if (tag) tag_id = tag._id;
+        console.log("Tag text" + tag_text);
         console.log(tag_id);
         return Questions.find({'tags.tag_id': tag_id});
       }
