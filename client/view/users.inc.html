@@ -1,20 +1,29 @@
   <!-- users view  -->
   <template name="usersview">
-    {{#each users}}
-    {{> user_item}}
-    {{/each}}
+    <div class="users-page">
+      {{#each users}}
+      {{> user_item}}
+      {{/each}}
+    </div>
   </template>
   <template name="user_item">
-    <div class="user">
-      <a href="/users/{{_id}}">{{profile.facebook.name}}</a> <img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" class="img-rounded">
-      <div>Questions:{{countof questions}}</div>
-      <div>Answered:{{countof answers}}</div>
-      {{#each tags}}
-        {{#with tagof}}
-          {{> tag_button}}
-        {{/with}}
-        X{{count}}
-      {{/each}}
+    <div class="user-info user-hover three columns">
+      <div class="user-gravatar48">
+        <a href="/users/{{_id}}" class="navigation-link"><div class=""><img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" alt="" width="48" height="48"></div></a>
+      </div>
+      <div class="user-details">
+          <a href="/users/{{_id}}" class="navigation-link">{{profile.facebook.name}}</a><br>                      
+          <span class="user-location">Madison, WI</span><br>
+          <span class="reputation-score" title="reputation this week: 1275
+  total reputation: 306984" dir="ltr">1,275</span>
+      </div>
+      <div class="user-tags">
+        {{#each tags}}
+          {{#with tagof}}
+            <a class="navigation-link" href="/questions/tagged/{{text}}" title="show questions tagged '{{text}}'" rel="tag">{{text}}</a>
+          {{/with}}
+        {{/each}}
+      </div>
     </div>
   </template>
   
@@ -31,13 +40,13 @@
       <div>
         {{#with user}}<h3>{{countof answers}} Answers</h3>{{/with}}
         {{#each limit_answers}}
-          <spa>{{countof votes}} votes </spa><a href="/questions/{{question_id}}">{{#with questionof}}{{title}}{{/with}}</a>
+          <spa>{{countof votes}} votes </spa><a href="/questions/{{question_id}}" class="navigation-link">{{#with questionof}}{{title}}{{/with}}</a>
         {{/each}}
       </div>
       <div>
         {{#with user}}<h3>{{countof questions}} Questions</h3>{{/with}}
         {{#each limit_questions}}
-          <spa>{{countof votes}} votes </spa><a href="/questions/{{_id}}">{{title}}</a>
+          <spa>{{countof votes}} votes </spa><a href="/questions/{{_id}}" class="navigation-link">{{title}}</a>
         {{/each}}
       </div>
   </template>

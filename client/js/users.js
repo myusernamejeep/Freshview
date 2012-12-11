@@ -6,6 +6,7 @@ Template.usersview.users = function() {
 
 //Users view single item
 Template.user_item.helpers(view_helpers);
+Template.user_item.events(view_events);
 Template.user_item.helpers({
   tagof : function() {
     return Tags.findOne({
@@ -16,6 +17,7 @@ Template.user_item.helpers({
 
 //User Detail view
 Template.userview.helpers(view_helpers);
+Template.userview.events(view_events);
 Template.userview.helpers({
   user : function() {
     return Meteor.users.findOne({

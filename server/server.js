@@ -4,13 +4,26 @@ Meteor.startup(function() {
     return Tags.find();
   });
 
+  //Prod
+  // if (!Accounts.loginServiceConfiguration.findOne({
+    // service : 'facebook'
+  // })) {
+    // Accounts.loginServiceConfiguration.insert({
+      // service : 'facebook',
+      // appId : "497675416943953",
+      // secret : "fe188886366e28f4f6d3645744b892ab"
+    // });
+// 
+  // }
+  
+  //Dev
   if (!Accounts.loginServiceConfiguration.findOne({
     service : 'facebook'
   })) {
     Accounts.loginServiceConfiguration.insert({
       service : 'facebook',
-      appId : "497675416943953",
-      secret : "fe188886366e28f4f6d3645744b892ab"
+      appId : "504528589581167",
+      secret : "0c060d906ffa8195b2dc516d6d7f32ea"
     });
 
   }

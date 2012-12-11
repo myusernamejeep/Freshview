@@ -7,12 +7,11 @@ Template.questionsview.helpers({
         var tag = Tags.findOne({text:tag_text});
         var tag_id = 0;
         if (tag) tag_id = tag._id;
-        console.log("Tag text" + tag_text);
-        console.log(tag_id);
         return Questions.find({'tags.tag_id': tag_id});
       }
       return Questions.find();
-    }
+  }
+    
   //@ft:on
 });
 
@@ -23,6 +22,7 @@ Template.question_item.events(view_events);
 
 //Single question view
 Template.questionview.helpers(view_helpers);
+Template.questionview.events(view_events);
 Template.questionview.helpers({
   question_id : function() {
     return Session.get('question_id');
@@ -138,6 +138,22 @@ Template.questionview.events({
 
 //Create new question
 //@ft:off
+Template.newview.rendered = function() {
+  var select = $('#new-question-form').find('input[name="tags"]').select2({
+    id : '_id', createSearchChoice : function(term, data) {
+      console.log('term' + term);
+      console.log(data);
+      if ($(data).filter(function() {
+        return this.text.localeCompare(term) === 0;
+      }).length === 0) {
+        return {
+          _id : term, text : term
+        };
+      }
+    }, data : Tags.find().fetch(), multiple : true
+  });  
+};
+
 Template.newview.events({
   //@ft:on
   'click .submit-question' : function(e) {

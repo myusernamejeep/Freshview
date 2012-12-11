@@ -227,6 +227,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$turquoise', 
   }
 }
 
+.users-page {
+  [class*="column"] + [class*="column"]:last-child {
+    float: left;
+  }
+  .user-info {
+    height: 85px;
+    margin: 8px 5px;
+    .user-gravatar48 {
+      float: left;
+      width: 48px;
+      height: 48px;
+    }
+  }
+  .user-tags {
+    font-family: Arial,Liberation Sans,DejaVu Sans,sans-serif;
+    font-size: 13px;
+    margin-left: 53px;
+  }
+}
+
 .relativetime {
   font-weight: bold;
   text-decoration: none;
