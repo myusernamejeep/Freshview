@@ -18,7 +18,7 @@
       <a href="/questions/{{_id}}" class="name">{{title}}</a>
       <span>{{truncate 80 content}}</span>
       <span>{{usernameof}}</span>
-      <span><img src="{{userphotoof}}" class="img-rounded"></span>
+      <span><img src="{{userphotoof}}"></span>
       at {{fromnow created}}
       <span>answers {{countof answers}}</span>
       <span>comments {{countof comments}}</span>
@@ -41,11 +41,12 @@
     {{> tag_button}}
     {{/each}}
     at {{fromnow created}}
-    by <span>{{usernameof}}</span>
+    by <span>{{usernameof}}</span><span><img src="{{userphotoof}}"></span>
     <div>
       <button class="question-vote-up icon-arrow-up"></button>
       {{countof votes}}<button class="question-vote-down icon-arrow-down"></button>
     </div>
+    
     {{#each comments}}
     <div>
       {{content}} - {{fromnow created}} - {{usernameof}} - <img src="{{userphotoof}}" class="img-rounded"/><span data-question-id="{{../permalink}}{{question_id}}" class="icon-remove-sign"></span>
