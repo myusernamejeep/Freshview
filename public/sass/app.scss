@@ -126,3 +126,106 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$turquoise', 
     height:40px;
   }
 }
+
+.question-summary {
+  border-bottom: 1px solid $turquoise;
+  padding: 11px 0px;
+  .statscontainer {
+    
+    .stats {
+      background: $turquoise-light1;
+      margin: 0 0 0 7px;
+      padding: 4px 7px 6px 7px;
+      
+      .vote {
+        .votes {
+          color: $turquoise-dark;
+          padding: 0 0 7px 0;
+          text-align: center;
+        }
+      }
+      .answered {
+        background: #75845C;
+        color: white;
+      }
+      .status {
+        margin-top: -3px;
+        padding: 4px 0 4px;
+        text-align: center;
+        strong {
+          display:block;
+        }
+      }
+    }
+    .views {
+      padding-top: 4px;
+      color: $turquoise-dark;
+      text-align: center;
+    }  
+  }
+  
+  .summary {
+    h3 {
+      margin-top: 0px;
+      margin-bottom: 5px;
+    }
+    .excerpt {
+      line-height: 1.2;
+      padding: 0;
+      margin: 0;
+      padding-bottom: 5px;
+    }
+    .tags {
+      line-height: 18px;
+      float: left;
+      .post-tag, .post-text .post-tag, .wmd-preview a.post-tag {
+        color: #3E6D8E;
+        background-color: #E0EAF1;
+        border-bottom: 1px solid #3E6D8E;
+        border-right: 1px solid #7F9FB6;
+        padding: 3px 4px 3px 4px;
+        margin: 2px 2px 2px 0;
+        text-decoration: none;
+        font-size: 90%;
+        line-height: 2.4;
+        white-space: nowrap;
+      }
+    }
+
+    .fr {
+      float: right;
+    }
+    .started {
+      color: #999;
+      float: right;
+      line-height: 18px;
+    }
+  }
+}
+
+.user-info {
+  height: 35px;
+  .user-action-time {
+    margin-top: 2px;
+    margin-bottom: 4px;
+  }
+  .user-gravatar32 {
+    float: left;
+    width: 32px;
+    height: 32px;
+  }
+  .user-details {
+    float: left;
+    margin-left: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 17px;
+  }
+}
+
+.relativetime {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+

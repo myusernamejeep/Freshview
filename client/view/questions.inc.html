@@ -14,19 +14,45 @@
   
   <!-- Single question item in list   -->
   <template name="question_item">
-    <div class="question">
-      <a href="/questions/{{_id}}" class="name">{{title}}</a>
-      <span>{{truncate 80 content}}</span>
-      <span>{{usernameof}}</span>
-      <span><img src="{{userphotoof}}"></span>
-      at {{fromnow created}}
-      <span>answers {{countof answers}}</span>
-      <span>comments {{countof comments}}</span>
-      <span>views {{views}}</span>
-      <span>votes {{countof votes}}</span>
-      {{#each tagsof}}
-      {{> tag_button}}
-      {{/each}}
+    <div class="question-summary row">
+      <div class="statscontainer two columns">
+      	<div class="stats">
+      	  <div class="vote">
+            <div class="votes">
+              <span class="vote-count-post"><strong>{{countof votes}}</strong></span>
+              <div class="viewcount">votes</div>
+            </div>
+          </div>
+          <div class="status answered">
+            <strong>{{countof answers}}</strong>answer
+          </div>
+      	</div>
+      	<div class="views" title="74 views">
+       	  {{views}} views
+		</div>
+      </div>
+      <div class="summary ten columns">
+      	<h3>
+      	  <a href="/questions/{{_id}}" class="question-hyperlink">{{title}}</a>	
+      	</h3>
+      	<div class="excerpt">
+       	  {{truncate 80 content}}    
+        </div>
+        <div class="tags t-entity-framework t-entity-framework-5 t-ef-migrations t-code-first-migrations">
+       	  {{#each tagsof}}
+		    {{> tag_button}}
+		  {{/each}}
+        </div>
+        <div class="started fr">
+          <div class="user-info user-hover">
+          <div class="user-action-time">asked<span title="{{fromnow created}}" class="relativetime">{{fromnow created}}</span>
+        </div>
+        <div class="user-gravatar32">
+          <a href="/users/246396/the-flower-guy"><div class=""><img src="{{userphotoof}}" alt="" width="32" height="32"></div></a>
+        </div>
+        <div class="user-details">
+            <a href="/users/246396/the-flower-guy">{{usernameof}}</a><br>
+        </div>
     </div>
   </template>
   
