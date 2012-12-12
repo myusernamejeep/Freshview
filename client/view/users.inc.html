@@ -1,13 +1,15 @@
   <!-- users view  -->
   <template name="usersview">
     <div class="users-page">
+      <div class="block-grid three-up">
       {{#each users}}
       {{> user_item}}
       {{/each}}
+      </div>
     </div>
   </template>
   <template name="user_item">
-    <div class="user-info user-hover three columns">
+    <li class="user-info user-hover">
       <div class="user-gravatar48">
         <a href="/users/{{_id}}" class="navigation-link"><div class=""><img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" alt="" width="48" height="48"></div></a>
       </div>
@@ -24,7 +26,7 @@
           {{/with}}
         {{/each}}
       </div>
-    </div>
+    </li>
   </template>
   
   <!-- user view -->

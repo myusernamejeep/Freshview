@@ -15,3 +15,9 @@ Template.tag_button.events({
   }
 });
 
+Template.sidebar_tags_view.helpers(view_helpers);
+Template.sidebar_tags_view.events(view_events);
+Template.sidebar_tags_view.tags = function() {
+  return Tags.find();
+};
+

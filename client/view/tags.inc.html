@@ -4,6 +4,7 @@
     {{> tag_item}}
     {{/each}}
   </template>
+  
   <template name="tag_item">
     <div class="tag">
       {{> tag_button}}
@@ -11,9 +12,15 @@
       <div>today {{counttoday questions}}</div>
     </div>
   </template>
+  
   <template name="tag_button">
   	<a class="post-tag navigation-link" href="/questions/tagged/{{text}}" title="show questions tagged '{{text}}'" rel="tag">{{text}}</a>
   </template>
-  <template name="edit_tag_wiki">
-    
+  
+  <template name="sidebar_tags_view">
+    {{#each tags}}
+      <div class="tag">
+        {{> tag_button}} X {{countof questions}}
+      </div>
+    {{/each}}
   </template>
