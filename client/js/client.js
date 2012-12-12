@@ -40,11 +40,13 @@ Template.groupview.groups = function() {
     group_link : 'tags', group_name : 'Tags'
   }, {
     group_link : 'users', group_name : 'Users'
-  }, {
-    group_link : 'badges', group_name : 'Badges'
-  }, {
-    group_link : 'unanswered', group_name : 'UnAnswered'
-  }];
+  }
+  // , {
+    // group_link : 'badges', group_name : 'Badges'
+  // }, {
+    // group_link : 'unanswered', group_name : 'UnAnswered'
+  // }
+  ];
 };
 
 Template.groupview.events({
