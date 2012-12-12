@@ -7,8 +7,11 @@
   
   <!-- questions view -->
   <template name="questionsview">
+    <div class="subheader">
+      <h3>Tagged Questions</h3>
+    </div>
     {{#each questions}}
-    {{> question_item}}
+      {{> question_item}}
     {{/each}}
   </template>
   

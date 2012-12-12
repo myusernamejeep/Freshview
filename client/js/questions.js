@@ -3,15 +3,17 @@ Template.questionsview.helpers({
   //@ft:off
   questions : function() {
     var tag_text = Session.get('tag_text');
-      if (tag_text) {
-        var tag = Tags.findOne({text:tag_text});
-        var tag_id = 0;
-        if (tag) tag_id = tag._id;
-        return Questions.find({'tags.tag_id': tag_id});
-      }
-      return Questions.find();
+	  if (tag_text) {
+	    var tag = Tags.findOne({text:tag_text});
+	    var tag_id = 0;
+	    if (tag) tag_id = tag._id;
+	    return Questions.find({'tags.tag_id': tag_id});
+	  }
+	  return Questions.find();
+  },
+  is_tagged_questions: function() {
+  	return Session.get('tag_text');
   }
-    
   //@ft:on
 });
 
