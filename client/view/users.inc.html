@@ -32,6 +32,37 @@
   <!-- user view -->
   <template name="userview">
     {{#with user}}
+    <div class="subheader">
+    <h3 id="user-displayname">{{profile.facebook.name}}</h3>
+    </div>
+    <div id="large-user-info" class="user-header row" style="">
+      <div class="user-header-left six columns row">
+        <div class="gravatar three columns">
+           <a href="http://stackoverflow.com/users/17034/hans-passant">
+             <div class=""><img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" alt="" width="128" height="128" class="logo"></div>
+           </a>
+           <div class="reputation">
+            <span>
+              <a href="/users/17034/hans-passant?tab=reputation">307,736</a>
+            </span>
+           reputation
+           </div>
+        </div>
+        <div class="data nine columns">
+          
+        </div>
+        </div>
+        
+        <div class="user-about-me note">
+<p>Formerly active in the MSDN forums as a contributor, moderator and MVP using the "nobugz" nick.  It didn't take me long to decide to switch bases, the SO team knows how to put a Q+A site together.  Great job.<br><br></p>
+
+<p>Send email to hpassant@ google's mail site if you want to get in touch.</p>
+        </div>
+        <br class="clear">
+    </div>
+    
+    
+    
       <div>
         <div><span>Name:</span>{{profile.facebook.name}}</div>
         <div><span>Email:</span>{{profile.facebook.email}}</div>

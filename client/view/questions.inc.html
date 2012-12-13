@@ -7,12 +7,28 @@
   
   <!-- questions view -->
   <template name="questionsview">
-    <div class="subheader">
-      <h3>Tagged Questions</h3>
+    <div class="nine columns">
+        <div class="subheader">
+          <h3>Tagged Questions</h3>
+        </div>
+        {{#each questions}}
+          {{> question_item}}
+        {{/each}}
     </div>
-    {{#each questions}}
-      {{> question_item}}
-    {{/each}}
+      
+    <div class="three columns">
+      <h4>All Tags</h4>
+      {{> sidebar_tags_view}}
+  
+<!--         <h4>Other Resources</h4>
+        <p>Once you've exhausted the fun in this document, you should check out:</p>
+        <ul class="disc">
+          <li><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</li>
+        </ul> -->
+    </div>
+    
+    
+    
   </template>
   
   <!-- Single question item in list   -->

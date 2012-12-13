@@ -78,21 +78,7 @@
     </header>
     
     <div class="row">
-      <div class="nine columns">
-        
-        {{> freshview}}
-      </div>
-      
-      <div class="three columns">
-        <h4>All Tags</h4>
-        {{> sidebar_tags_view}}
-  
-<!--         <h4>Other Resources</h4>
-        <p>Once you've exhausted the fun in this document, you should check out:</p>
-        <ul class="disc">
-          <li><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</li>
-        </ul> -->
-      </div>
+      {{> freshview}}
     </div>
     
     
@@ -114,7 +100,7 @@
       logout
     </button>
     {{/with}}
-    {{else}}<a id="fb-login" href="#" class="btn btn-primary">Facebook</a>
+    {{else}}<a id="fb-login" href="#" class="btn btn-primary">Login with Facebook</a>
     {{/if}}
   </template>
   
