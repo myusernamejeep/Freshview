@@ -3,16 +3,16 @@ Template.questionsview.helpers({
   //@ft:off
   questions : function() {
     var tag_text = Session.get('tag_text');
-	  if (tag_text) {
-	    var tag = Tags.findOne({text:tag_text});
-	    var tag_id = 0;
-	    if (tag) tag_id = tag._id;
-	    return Questions.find({'tags.tag_id': tag_id});
-	  }
-	  return Questions.find();
+    if (tag_text) {
+      var tag = Tags.findOne({text:tag_text});
+      var tag_id = 0;
+      if (tag) tag_id = tag._id;
+      return Questions.find({'tags.tag_id': tag_id});
+    }
+    return Questions.find();
   },
   is_tagged_questions: function() {
-  	return Session.get('tag_text');
+    return Session.get('tag_text');
   }
   //@ft:on
 });
@@ -29,8 +29,18 @@ Template.questionview.helpers({
   question_id : function() {
     return Session.get('question_id');
   }, question : function() {
+    var questionId = Session.get('question_id');
+    // // check if the user hasn't visited this question already
+    // var user = Meteor.users.findOne({_id:Meteor.userId(),questionsVisited:{$ne:questionId}});
+// 
+    // if (user) {
+      // // otherwise, increment the question view count and add the question to the user's visited page
+      // Meteor.users.update({_id:Meteor.userId()},{$addToSet:{questionsVisited:questionId}});
+      // Questions.update({_id: questionId}, {$inc: {views: 1}});
+    // }
+    
     return Questions.findOne({
-      _id : Session.get('question_id')
+      _id : questionId
     });
   }, answers : function() {
     return Answers.find({
@@ -58,10 +68,10 @@ Template.questionview.events({
     });
   },
   'click .comments' : function(e) {
-  	var commentLink = e.target;
-  	if (!$(commentLink).hasClass('comments-link')) {
-  		return;
-  	}
+    var commentLink = e.target;
+    if (!$(commentLink).hasClass('comments-link')) {
+      return;
+    }
     var comment = e.currentTarget;
     $(commentLink).hide();
     $(comment).find('.comment-form').show();
@@ -91,10 +101,10 @@ Template.questionview.events({
       updated : new Date()
     });
     Questions.update({_id:this._id}, {
-      $push : {answers: answer_id}
+      $addToSet : {answers: answer_id}
     });
     Meteor.users.update({_id:Meteor.userId()}, {
-      $push : {answers: answer_id}
+      $addToSet : {answers: answer_id}
     });
   },
   'click .question-vote-down': function() {
@@ -110,7 +120,7 @@ Template.questionview.events({
       return;
     }
     Questions.update({_id:this._id}, {
-      $push : {votes: {
+      $addToSet : {votes: {
         user_id: Meteor.userId(),
         created: new Date()
       }}      
@@ -121,7 +131,7 @@ Template.questionview.events({
       return;
     }
     Answers.update({_id:this._id}, {
-      $push : {votes: {
+      $addToSet : {votes: {
         user_id: Meteor.userId(),
         created: new Date()
       }}      
@@ -164,6 +174,7 @@ Template.newview.events({
   //@ft:on
   'click .submit-question' : function(e) {
     e.preventDefault();
+    if (!Meteor.userId()) return;
     var form = $(e.target).parent('form');
     var title = form.find('input[name="title"]').val();
     var content = form.find('textarea[name="content"]').val();
@@ -196,7 +207,7 @@ Template.newview.events({
     Meteor.users.update({
       _id : Meteor.userId()
     }, {
-      $push : {
+      $addToSet : {
         'questions' : {
           question_id : topic_id
         }
@@ -223,7 +234,7 @@ Template.newview.events({
       }
       console.log("update questions in tags");
       Tags.update({ _id : tag_id }, {
-        $push : {  questions : {question_id:topic_id, created : new Date()} }
+        $push : {  questions : {question_id:topic_id} }
       });
     });
     

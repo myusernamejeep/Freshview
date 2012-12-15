@@ -2,11 +2,11 @@ if (typeof Handlebars !== 'undefined') {
   Handlebars.registerHelper('truncate', function(count, text) {
     if (! _.isString(text))
       text = '';
-	if (text.length < count) {
-	  return text;
-	} else {
-	  return text.substring(0, count - 3) + "...";
-	}
+  if (text.length < count) {
+    return text;
+  } else {
+    return text.substring(0, count - 3) + "...";
+  }
   });
 }
 
@@ -14,16 +14,6 @@ Template.freshview.helpers({
   renderPage : function() {
     var name = Session.get('main_template_name');
     var templateName = name + "view";
-    if(Session.equals('main_template_name', 'question')) {
-      console.log(Session.get('question_id'));
-      Questions.update({
-        _id: Session.get('question_id')
-      }, {
-        $inc: {
-          views: 1
-        }
-      });
-    }
     if (Template[templateName])
       return new Handlebars.SafeString(Template[templateName]());
     else
@@ -88,14 +78,14 @@ FVRouter = Backbone.Router.extend({
   },
   //@ft:on
   show_group : function(group) {
-  	Session.set('question_id', null);
-  	Session.set('tag_text', null);
+    Session.set('question_id', null);
+    Session.set('tag_text', null);
     Session.set('main_template_name', group);
   }, show_question : function(id) {
-  	Session.set('question_id', id);
+    Session.set('question_id', id);
     Session.set('main_template_name', 'question');
   }, show_questions_with_tag : function(tag_text) {
-  	Session.set('tag_text', tag_text);
+    Session.set('tag_text', tag_text);
     Session.set('main_template_name', 'questions');
   },
   show_user : function(user_id) {
