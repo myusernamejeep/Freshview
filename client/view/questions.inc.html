@@ -154,15 +154,13 @@
   
   <!-- create question view   -->
   <template name="newview">
-    <form id="new-question-form">
+      <form id="new-question-form">
       <div>
         <div>
           <input name="title" class="span6" type="text" placeholder="What's your programming question? be specific.">
           </input>
         </div>
-        <div>
-          <textarea class="span6" name="content"></textarea>
-        </div>
+        {{> rich_text_editor}}
         <div>
           <input name="tags" autocomplete="off" class="span6 select2-input" tabindex="0" type="text" placeholder="At lease one tag such as (aps.net-mvc sql-server python), max 5 tags">
           </input>
@@ -172,6 +170,40 @@
         Create
       </button>
     </form>
+  </template>
+  
+  <template name="rich_text_editor">
+    <div id="wysihtml5-toolbar" style="display: none;">
+      <ul class="wmd-button-row">
+        <li class="wmd-button" id="wmd-bold-button" title="Strong &lt;strong&gt; Ctrl+B" data-wysihtml5-command="bold"><span style="background-position: 0px 0px;"></span></li>
+        <li class="wmd-button" style="left: 25px;" data-wysihtml5-command="italic" id="wmd-italic-button" title="Emphasis &lt;em&gt; Ctrl+I"><span style="background-position: -20px 0px;"></span></li>
+        <li class="wmd-spacer wmd-spacer1" style="left: 50px;"  id="wmd-spacer1"></li>
+        
+        <li class="wmd-button" style="left: 75px;" id="wmd-link-button" data-wysihtml5-command="createLink" title="Hyperlink &lt;a&gt; Ctrl+L"><span style="background-position: -40px 0px;"></span></li>
+        <li class="wmd-button" style="left: 100px;" id="wmd-quote-button" title="Blockquote &lt;blockquote&gt; Ctrl+Q"><span style="background-position: -60px 0px;"></span></li>
+        <li class="wmd-button" style="left: 125px;" id="wmd-code-button" title="Code Sample &lt;pre&gt;&lt;code&gt; Ctrl+K"><span style="background-position: -80px 0px;"></span></li>
+        <li class="wmd-button" style="left: 150px;" id="wmd-image-button" title="Image &lt;img&gt; Ctrl+G"><span style="background-position: -100px 0px;"></span></li>
+        <li class="wmd-spacer wmd-spacer2" style="left: 175px;"  id="wmd-spacer2"></li>
+        
+        <li class="wmd-button" style="left: 200px;" id="wmd-olist-button" title="Numbered List &lt;ol&gt; Ctrl+O"><span style="background-position: -120px 0px;"></span></li>
+        <li class="wmd-button" style="left: 225px;" id="wmd-ulist-button" title="Bulleted List &lt;ul&gt; Ctrl+U"><span style="background-position: -140px 0px;"></span></li>
+        <li class="wmd-button" style="left: 250px;" id="wmd-heading-button" title="Heading &lt;h1&gt;/&lt;h2&gt; Ctrl+H"><span style="background-position: -160px 0px;"></span></li>
+        <li class="wmd-button" style="left: 275px;" id="wmd-hr-button" title="Horizontal Rule &lt;hr&gt; Ctrl+R"><span style="background-position: -180px 0px;"></span></li>
+        <li class="wmd-spacer wmd-spacer3" style="left: 300px;" id="wmd-spacer3"></li>
+        
+        <li class="wmd-button" style="left: 325px;" id="wmd-undo-button" title="Undo - Ctrl+Z"><span style="background-position: -200px 0px;"></span></li>
+        <li class="wmd-button" style="left: 350px;" id="wmd-redo-button" title="Redo - Ctrl+Shift+Z"><span style="background-position: -220px -20px;"></span></li>
+      </ul>
+      
+      <div data-wysihtml5-dialog="createLink" style="display: none;">
+        <label>
+          Link:
+          <input data-wysihtml5-dialog-field="href" value="http://" class="text">
+        </label>
+        <a data-wysihtml5-dialog-action="save">OK</a> <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+      </div>
+    </div>
+    <form><textarea id="wysihtml5-textarea" placeholder="Enter your text ..." autofocus></textarea></form>
   </template>
   
   
