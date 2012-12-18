@@ -31,6 +31,21 @@ Template.userview.helpers({
     var user_id = Session.get('user_id');
     var questions = Questions.find({user_id:user_id}, {sort: {votes: -1}});
     return questions.fetch().slice(0, 5);
+  }, limit_tags : function() {
+  	var user_id = Session.get('user_id');
+    var user = Meteor.users.findOne({
+      _id : Session.get('user_id')
+    }, { fields : { 'tags': 1 } });
+    if (user && user['tags']) {
+      var tagids = user['tags'].slice(0, 5);
+      var tags = Tags.find({_id : {
+    	$in: _.pluck(tagids, "tag_id")
+      }}).fetch();
+      _.each(tagids, function(tagid){
+        tagid['text'] = _.find(tags, function(tag){ return tag['_id'] === tagid['tag_id']; })['text'];
+      });
+      return tagids;
+    }
   }
 });
 
