@@ -5,6 +5,7 @@ Template.tagsview.tags = function() {
 
 //Tags view single item
 Template.tag_item.helpers(view_helpers);
+Template.tag_item.events(view_events);
 
 Template.tag_button.events({
   'click .tag-button' : function() {
