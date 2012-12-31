@@ -30,14 +30,23 @@ Template.questionview.helpers({
     return Session.get('question_id');
   }, question : function() {
     var questionId = Session.get('question_id');
-    // // check if the user hasn't visited this question already
-    // var user = Meteor.users.findOne({_id:Meteor.userId(),questionsVisited:{$ne:questionId}});
-// 
-    // if (user) {
-      // // otherwise, increment the question view count and add the question to the user's visited page
-      // Meteor.users.update({_id:Meteor.userId()},{$addToSet:{questionsVisited:questionId}});
-      // Questions.update({_id: questionId}, {$inc: {views: 1}});
+    if (!questionId) {
+      return null;
+    }
+    // console.log("questionId" + questionId);
+    // console.log("userId" + Meteor.userId());
+    // if (Meteor.userId()) {
+      // console.log("userid" + Meteor.userId());
+      // // check if the user hasn't visited this question already
+      // var user = Meteor.users.findOne({_id:Meteor.userId(),questionsVisited:{$ne:questionId}});
+//   
+      // if (user) {
+        // // otherwise, increment the question view count and add the question to the user's visited page
+        // Meteor.users.update({_id:Meteor.userId()},{$addToSet:{questionsVisited:questionId}});
+        // Questions.update({_id: questionId}, {$inc: {views: 1}});
+      // }
     // }
+    
     
     return Questions.findOne({
       _id : questionId

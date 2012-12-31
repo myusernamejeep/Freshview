@@ -50,7 +50,7 @@ view_helpers = {
   }, questionof : function() {
     return questionof(this.question_id);
   }, fromnow : function(t) {
-    console.log(t);
+    if (!t) return "Time unknown";
     return moment.utc(t).fromNow();
   }, countof : function(items) {
     if (items)
