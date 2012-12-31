@@ -1,100 +1,147 @@
-  <!-- users view  -->
-  <template name="usersview">
-    <div class="users-page">
-      <div class="block-grid three-up">
+<!-- users view  -->
+<template name="usersview">
+  <div class="users-page">
+    <div class="block-grid three-up">
       {{#each users}}
       {{> user_item}}
       {{/each}}
-      </div>
     </div>
-  </template>
-  <template name="user_item">
-    <li class="user-info user-hover">
-      <div class="user-gravatar48">
-        <a href="/users/{{_id}}" class="navigation-link"><div class=""><img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" alt="" width="48" height="48"></div></a>
-      </div>
-      <div class="user-details">
-          <a href="/users/{{_id}}" class="navigation-link">{{profile.facebook.name}}</a><br>                      
-          <span class="user-location">Madison, WI</span><br>
-          <span class="reputation-score" title="reputation this week: 1275
-  total reputation: 306984" dir="ltr">1,275</span>
-      </div>
-      <div class="user-tags">
-        {{#each tags}}
-          {{#with tagof}}
-            <a class="navigation-link" href="/questions/tagged/{{text}}" title="show questions tagged '{{text}}'" rel="tag">{{text}}</a>
-          {{/with}}
-        {{/each}}
-      </div>
-    </li>
-  </template>
-  
-  <!-- user view -->
-  <template name="userview">
-    {{#with user}}
-    <div class="subheader">
+  </div>
+</template>
+<template name="user_item">
+  <li class="user-info user-hover">
+    <div class="user-gravatar48">
+      <a href="/users/{{_id}}" class="navigation-link">
+      <div class=""><img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" alt="" width="48" height="48">
+      </div></a>
+    </div>
+    <div class="user-details">
+      <a href="/users/{{_id}}" class="navigation-link">{{profile.facebook.name}}</a>
+      <br>
+      <span class="user-location">Madison, WI</span>
+      <br>
+      <span class="reputation-score" title="reputation this week: 1275
+      total reputation: 306984" dir="ltr">1,275</span>
+    </div>
+    <div class="user-tags">
+      {{#each tags}}
+      {{#with tagof}} <a class="navigation-link" href="/questions/tagged/{{text}}" title="show questions tagged '{{text}}'" rel="tag">{{text}}</a>
+      {{/with}}
+      {{/each}}
+    </div>
+  </li>
+</template>
+<!-- user view -->
+<template name="userview">
+  {{#with user}}
+  <div class="subheader">
     <h3 id="user-displayname">{{profile.facebook.name}}</h3>
-    </div>
-    <div id="large-user-info" class="user-header row" style="">
-      <div class="user-header-left six columns row">
-        <div class="gravatar three columns">
-           <a href="http://stackoverflow.com/users/17034/hans-passant">
-             <div class=""><img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" alt="" width="128" height="128" class="logo"></div>
-           </a>
-           <div class="reputation">
-            <span>
-              <a href="/users/17034/hans-passant?tab=reputation">307,736</a>
-            </span>
-           reputation
-           </div>
+  </div>
+  <div id="large-user-info" class="user-header row" style="">
+    <div class="user-header-left six columns row">
+      <div class="gravatar three columns">
+        <a href="http://stackoverflow.com/users/17034/hans-passant">
+        <div class=""><img src="https://graph.facebook.com/{{profile.facebook.username}}/picture" alt="" width="128" height="128" class="logo">
+        </div> </a>
+        <div class="reputation">
+          <span> <a href="/users/17034/hans-passant?tab=reputation">307,736</a> </span>
+          reputation
         </div>
-        <div class="data nine columns">
-          
-        </div>
-        </div>
-        
-        <div class="user-about-me note">
-<p>Formerly active in the MSDN forums as a contributor, moderator and MVP using the "nobugz" nick.  It didn't take me long to decide to switch bases, the SO team knows how to put a Q+A site together.  Great job.<br><br></p>
-
-<p>Send email to hpassant@ google's mail site if you want to get in touch.</p>
-        </div>
-        <br class="clear">
-    </div>
-    
-    
-    
-      <div>
-        <div><span>Name:</span>{{profile.facebook.name}}</div>
-        <div><span>Email:</span>{{profile.facebook.email}}</div>
-        <div><span>Gender:</span>{{profile.facebook.gender}}</div>
-        <div>Joined {{fromnow created}}</div>
       </div>
-    {{/with}}
-      <div>
+      <div class="data nine columns">
+        <div class="details">
+          <dl>
+            <dt>
+              <span class="mini-icon mini-icon-unread-note"></span>
+            </dt>
+            <dd>
+              <a class="email js-obfuscate-email" data-email="%66%63%71%5f%37%33%31%40%68%6f%74%6d%61%69%6c%2e%63%6f%6d" href="mailto:{{profile.facebook.email}}">{{profile.facebook.email}}</a>
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              <span class="mini-icon mini-icon-unread-note"></span>
+            </dt>
+            <dd>
+              {{profile.facebook.gender}}
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              <span class="mini-icon mini-icon-unread-note"></span>
+            </dt>
+            <dd>
+              Joined {{fromnow createdAt}}
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="user-about-me note"></div>
+    <br class="clear">
+  </div>
+  {{/with}}
+  <div class="user-header-nav">
+    <ul class="block-grid two-up">
+      <li class="user-panel">
         {{#with user}}<h3>{{countof answers}} Answers</h3>{{/with}}
         {{#each limit_answers}}
-          <spa>{{countof votes}} votes </spa><a href="/questions/{{question_id}}" class="navigation-link">{{#with questionof}}{{title}}{{/with}}</a>
+        <div class="row">
+          <div class="mini-counts answered-accepted one columns">
+            {{countof votes}}
+          </div>
+          <div>
+            <a href="/questions/{{question_id}}" class="navigation-link answer-hyperlink ten columns">{{#with questionof}}{{title}}{{/with}}</a>
+          </div>
+        </div>
         {{/each}}
-      </div>
-      <div>
+      </li>
+      <li class="user-panel">
         {{#with user}}<h3>{{countof questions}} Questions</h3>{{/with}}
         {{#each limit_questions}}
-          <spa>{{countof votes}} votes </spa><a href="/questions/{{_id}}" class="navigation-link">{{title}}</a>
+        <div class="row">
+          <div class="mini-counts answered-accepted one columns">
+            {{countof votes}}
+          </div>
+          <div>
+            <a href="/questions/{{_id}}" class="navigation-link answer-hyperlink ten columns">{{title}}</a>
+          </div>
+        </div>
         {{/each}}
+      </li>
+      <li class="user-panel">
+        {{#with user}}<h3>{{countof tags}} Tags</h3>{{/with}}
+        {{#each limit_tags}}
+        <div class="row">
+          <div class="mini-counts answered-accepted one columns">
+            {{count}}
+          </div>
+          <div>
+            <a href="/questions/tagged/{{text}}" class="navigation-link answer-hyperlink ten columns">{{text}}</a>
+          </div>
+        </div>
+        {{/each}}
+      </li>
+    </ul>
+  </div>
+  <div></div>
+  <div></div>
+</template>
+<!-- user info view -->
+<template name="user_info">
+  <div class="started fr">
+    <div class="user-info user-hover">
+      <div class="user-action-time">
+        asked <span title="{{fromnow created}}" class="relativetime">{{fromnow created}}</span>
       </div>
-  </template>
-  
-  <!-- user info view -->
-  <template name="user_info">
-    <div class="started fr">
-      <div class="user-info user-hover">
-        <div class="user-action-time">asked <span title="{{fromnow created}}" class="relativetime">{{fromnow created}}</span></div>
-        <div class="user-gravatar32">
-          <a href="users/{{user_id}}" class="navigation-link"><div class=""><img src="{{userphotoof}}" alt="" width="32" height="32"></div></a>
-        </div>
-        <div class="user-details">
-          <a href="users/{{user_id}}" class="navigation-link">{{usernameof}}</a>
-        </div>
+      <div class="user-gravatar32">
+        <a href="users/{{user_id}}" class="navigation-link">
+        <div class=""><img src="{{userphotoof}}" alt="" width="32" height="32">
+        </div></a>
+      </div>
+      <div class="user-details">
+        <a href="users/{{user_id}}" class="navigation-link">{{usernameof}}</a>
       </div>
     </div>
-  </template>
+  </div>
+</template>
