@@ -25,29 +25,32 @@ Template.question_item.events(view_events);
 //Single question view
 Template.questionview.helpers(view_helpers);
 Template.questionview.events(view_events);
+Meteor.autorun(function() {
+  var questionId = Session.get('question_id');
+  if (!questionId) {
+    return null;
+  }
+  var userId = Meteor.userId();
+    if (userId && !Questions.findOne({_id:questionId, user_id:Meteor.userId()})) {
+    // check if the user hasn't visited this question already
+    var user = Meteor.users.findOne({_id:userId,questionsVisited:{$nin:[questionId]}, questions:{$nin:[questionId]}});
+
+    if (user) {
+      console.log("questionId" + questionId);
+      console.log("userId" + userId);
+      // otherwise, increment the question view count and add the question to the user's visited page
+      Meteor.users.update({_id:userId},{$addToSet:{questionsVisited:questionId}});
+      console.log("update user");
+      Questions.update({_id: questionId}, {$inc: {views: 1}});
+      console.log("update quetion");
+    }
+  }
+});
 Template.questionview.helpers({
   question_id : function() {
     return Session.get('question_id');
   }, question : function() {
     var questionId = Session.get('question_id');
-    if (!questionId) {
-      return null;
-    }
-    // console.log("questionId" + questionId);
-    // console.log("userId" + Meteor.userId());
-    // if (Meteor.userId()) {
-      // console.log("userid" + Meteor.userId());
-      // // check if the user hasn't visited this question already
-      // var user = Meteor.users.findOne({_id:Meteor.userId(),questionsVisited:{$ne:questionId}});
-//   
-      // if (user) {
-        // // otherwise, increment the question view count and add the question to the user's visited page
-        // Meteor.users.update({_id:Meteor.userId()},{$addToSet:{questionsVisited:questionId}});
-        // Questions.update({_id: questionId}, {$inc: {views: 1}});
-      // }
-    // }
-    
-    
     return Questions.findOne({
       _id : questionId
     });
@@ -221,6 +224,7 @@ Template.newview.events({
       var tag_id = tagId['tag_id'];
       //@ft:off
       if (Meteor.users.find({  _id : Meteor.userId(), 'tags.tag_id' : tag_id  }, {fields:{_id:1, tags:1}}).count()) {
+        console.log("tagId" + tag_id);
         Meteor.users.update({ _id : Meteor.userId(), 'tags.tag_id' : tag_id }, {
           $inc : { 'tags.$.count' : 1 }
         });
@@ -230,7 +234,7 @@ Template.newview.events({
         Meteor.users.update({
           _id : Meteor.userId()
         }, {
-          $push : { 'tags' : { tag_id : tag_id, count : 1 } }
+          $set : { 'tags' : { tag_id : tag_id, count : 1 } }
         });
         console.log('push finish');
       }
