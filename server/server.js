@@ -34,7 +34,7 @@ Meteor.startup(function() {
         'questions' : 1,
         'tags': 1,
         'answers': 1,
-        'created': 1
+        'createdAt': 1
       }
     });
   });

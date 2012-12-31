@@ -18,10 +18,11 @@
     <div class="user-details">
       <a href="/users/{{_id}}" class="navigation-link">{{profile.facebook.name}}</a>
       <br>
-      <span class="user-location">Madison, WI</span>
+      <span class="user-location"><a class="email js-obfuscate-email" data-email="%66%63%71%5f%37%33%31%40%68%6f%74%6d%61%69%6c%2e%63%6f%6d" href="mailto:{{profile.facebook.email}}">{{profile.facebook.email}}</a>
+</span>
       <br>
       <span class="reputation-score" title="reputation this week: 1275
-      total reputation: 306984" dir="ltr">1,275</span>
+      total reputation: 306984" dir="ltr">Joined {{fromnow createdAt}}</span>
     </div>
     <div class="user-tags">
       {{#each tags}}
