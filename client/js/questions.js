@@ -31,18 +31,14 @@ Meteor.autorun(function() {
     return null;
   }
   var userId = Meteor.userId();
-    if (userId && !Questions.findOne({_id:questionId, user_id:Meteor.userId()})) {
+  if (userId && !Questions.findOne({_id:questionId, user_id:Meteor.userId()})) {
     // check if the user hasn't visited this question already
     var user = Meteor.users.findOne({_id:userId,questionsVisited:{$nin:[questionId]}, questions:{$nin:[questionId]}});
 
     if (user) {
-      console.log("questionId" + questionId);
-      console.log("userId" + userId);
       // otherwise, increment the question view count and add the question to the user's visited page
       Meteor.users.update({_id:userId},{$addToSet:{questionsVisited:questionId}});
-      console.log("update user");
       Questions.update({_id: questionId}, {$inc: {views: 1}});
-      console.log("update quetion");
     }
   }
 });
