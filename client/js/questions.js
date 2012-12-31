@@ -9,8 +9,7 @@ Template.questionsview.helpers({
       if (tag) tag_id = tag._id;
       return Questions.find({'tags.tag_id': tag_id});
     }
-    console.log(Questions.find().fetch());
-    return Questions.find();
+    return Questions.find({}, {sort: {views: -1}});
   },
   is_tagged_questions: function() {
     return Session.get('tag_text');
