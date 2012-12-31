@@ -65,7 +65,7 @@ Template.questionview.events({
     if (!content)
       return;
     //@ft:off
-    Questions.update({_id:this.question_id}, {
+    Questions.update({_id:this._id}, {
       $push : {
         'comments' : {
           content: content,
