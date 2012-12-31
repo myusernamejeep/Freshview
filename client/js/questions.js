@@ -9,6 +9,7 @@ Template.questionsview.helpers({
       if (tag) tag_id = tag._id;
       return Questions.find({'tags.tag_id': tag_id});
     }
+    console.log(Questions.find().fetch());
     return Questions.find();
   },
   is_tagged_questions: function() {
@@ -51,6 +52,7 @@ Template.questionview.helpers({
 Template.questionview.events({
   'click .btn-add-comment' : function(e) {
     e.preventDefault();
+    if (!Meteor.userId()) return;
     var form = $(e.target).parent('div');
     var content = form.find('.input-add-comment').val();
     if (!content)
@@ -78,7 +80,6 @@ Template.questionview.events({
   }, 
   'click .icon-remove-sign' : function(e) {
     var question_id = $(e.target).data('question-id');
-    console.log("questionid" + question_id);
     //@ft:off
     Questions.update({_id:question_id, 'comments._id':this._id}, {
       $pull: {comments: {_id:this._id}}
@@ -87,12 +88,11 @@ Template.questionview.events({
   //@ft:on
   'click .answer' : function(e) {
     var answerBox = e.currentTarget;
+    if (!Meteor.userId()) return;
     var content = $(answerBox).find('.input-add-answer').val();
-    console.log(content);
     if (!content)
       return;
     //@ft:off
-    console.log(this.data);
     answer_id = Answers.insert({
       content : content, 
       user_id : Meteor.userId(), 
@@ -153,8 +153,6 @@ Template.questionview.events({
 Template.newview.rendered = function() {
   var select = $('#new-question-form').find('input[name="tags"]').select2({
     id : '_id', createSearchChoice : function(term, data) {
-      console.log('term' + term);
-      console.log(data);
       if ($(data).filter(function() {
         return this.text.localeCompare(term) === 0;
       }).length === 0) {
@@ -178,12 +176,12 @@ Template.newview.events({
     var form = $(e.target).parent('form');
     var title = form.find('input[name="title"]').val();
     var content = form.find('textarea[name="content"]').val();
+    if (!content) return;
+    if (!title) return;
     var tags = form.find('input[name="tags"]').val();
     if (tags)
       tags = tags.split(',');
     tagIds = [];
-    console.log('get tags:');
-    console.log(tags);
     _.each(tags, function(id) {
       if (!id) {
         return;
@@ -196,14 +194,11 @@ Template.newview.events({
         tagIds.push({ tag_id : id });
       }
     });
-    console.log('get tagIds:');
-    console.log(tagIds);
     //@ft:on
     topic_id = Questions.insert({
       title : title, content : content, tags : tagIds, user_id : Meteor.userId(), created : new Date(), updated : new Date(), views: 0
     });
 
-    console.log('push topic to user');
     Meteor.users.update({
       _id : Meteor.userId()
     }, {
@@ -218,7 +213,6 @@ Template.newview.events({
       var tag_id = tagId['tag_id'];
       //@ft:off
       if (Meteor.users.find({  _id : Meteor.userId(), 'tags.tag_id' : tag_id  }, {fields:{_id:1, tags:1}}).count()) {
-        console.log('inc');
         Meteor.users.update({ _id : Meteor.userId(), 'tags.tag_id' : tag_id }, {
           $inc : { 'tags.$.count' : 1 }
         });

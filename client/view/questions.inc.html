@@ -102,7 +102,11 @@
             <div class="comment">
               <div class="comment-text">
                 <span class="comment-copy">{{content}}</span>
-                <a href="/users/{{user_id}}" class="comment-user navigation-link">{{usernameof}}</a>
+                {{#if user_id}}
+                  <a href="/users/{{user_id}}" class="comment-user navigation-link">{{usernameof}}</a>
+                {{else}}
+                  Anonymous
+                {{/if}}
                 <span class="comment-date" dir="ltr"><a class="comment-link" href="#"><span title="{{fromnow created}}" class="relativetime-clean">{{fromnow created}}</span></a></span>
               </div>
             </div>

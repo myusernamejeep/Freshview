@@ -59,9 +59,12 @@ view_helpers = {
     var tagIds = this.tags;
     var tags = [];
     _.each(tagIds, function(tag) {
-      tags.push(Tags.findOne({
+      var tag = Tags.findOne({
         _id : tag.tag_id
-      }));
+      });
+      if (tag) {
+        tags.push(tag);
+      }
     });
     return tags;
   }, counttoday : function(items) {
