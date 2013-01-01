@@ -42,7 +42,13 @@ Template.userview.helpers({
     	$in: _.pluck(tagids, "tag_id")
       }}).fetch();
       _.each(tagids, function(tagid){
-        tagid['text'] = _.find(tags, function(tag){ return tag['_id'] === tagid['tag_id']; })['text'];
+        var tag = _.find(tags, function(tag){ return tag['_id'] === tagid['tag_id']; });
+        if (tag) {
+          tagid['text'] = tag['text'];
+        } else {
+          tagid['text'] = tagid['tag_id'];
+        }
+        
       });
       return tagids;
     }
