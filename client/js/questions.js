@@ -230,7 +230,7 @@ Template.newview.events({
         Meteor.users.update({
           _id : Meteor.userId()
         }, {
-          $set : { 'tags' : { tag_id : tag_id, count : 1 } }
+          $push : { 'tags' : { tag_id : tag_id, count : 1 } }
         });
         console.log('push finish');
       }
